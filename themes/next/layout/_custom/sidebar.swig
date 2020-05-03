@@ -3,7 +3,7 @@
 <script language="javascript">
 function show_date_time(){
 window.setTimeout("show_date_time()", 1000);
-BirthDay=new Date("10/01/2017 00:00:00");
+BirthDay=new Date("10/01/2019 00:00:00");
 today=new Date();
 timeold=(today.getTime()-BirthDay.getTime());
 sectimeold=timeold/1000

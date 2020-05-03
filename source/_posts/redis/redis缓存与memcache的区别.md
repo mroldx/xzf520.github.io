@@ -4,13 +4,12 @@ tags: [redis]
 date: 2020-04-29 00:41:19
 permalink:
 categories: redis
-description:
+description: redis缓存与memcache的区别
 image:
 ---
 
-## redis缓存与memcache的区别
 
----
+<p class="description" ></p>
 
 <!-- more -->
 
@@ -33,7 +32,7 @@ Redis支持的数据类型有：String、Hash、List、Set和Sorted Set。Redis�
 
 redisObject最主要的信息如图所示：
 
-![image](1.jpg)
+<img src="/images/1.jpg">
 
 type代表一个value对象具体是什么数据类型，encoding表示不同数据类型在redis内部的存储方式，比如：type=String代表value存储的是一个普通字符串，那么对应的encoding可以是raw或者是int，如果是int则代表实际redis内部是按数值类型存储和表示这个字符串的，当然前提是这个字符串本身可以用数值表示，比如:”123″ “456”这样的字符串。只有打开了Redis的虚拟内存功能，vm字段才会真正的分配内存，该功能默认是关闭状态的。
 
@@ -53,7 +52,7 @@ type代表一个value对象具体是什么数据类型，encoding表示不同数
 
 实现方式：Redis的Hash实际是内部存储的Value为一个HashMap，并提供了直接存取这个Map成员的接口。如图所示，Key是用户ID, value是一个Map。这个Map的key是成员的属性名，value是属性值。这样对数据的修改和存取都可以直接通过其内部Map的Key(Redis里称内部Map的key为field), 也就是通过 key(用户ID) + field(属性标签) 就可以操作对应属性数据。当前HashMap的实现有两种方式：当HashMap的成员比较少时Redis为了节省内存会采用类似一维数组的方式来紧凑存储，而不会采用真正的HashMap结构，这时对应的value的redisObject的encoding为zipmap，当成员数量增大时会自动转成真正的HashMap,此时encoding为ht。
 
-![image](img/2.jpg)
+<img src="/images/2.jpg">
 
 3）List
 
@@ -90,15 +89,15 @@ Memcached默认使用Slab Allocation机制管理内存，其主要思想是按�
 
 
 
-![image](img/3.jpg)
+<img src="/images/3.jpg">
 
 当Memcached接收到客户端发送过来的数据时首先会根据收到数据的大小选择一个最合适的Slab Class，然后通过查询Memcached保存着的该Slab Class内空闲Chunk的列表就可以找到一个可用于存储数据的Chunk。当一条数据库过期或者丢弃时，该记录所占用的Chunk就可以回收，重新添加到空闲列表中。从以上过程我们可以看出Memcached的内存管理制效率高，而且不会造成内存碎片，但是它最大的缺点就是会导致空间浪费。如下图所示，将100个字节的数据存到128个字节的Chunk中，剩余的28个字节就浪费掉了。
 
-![image](img/4.png)
+<img src="/images/4.png">
 
 Redis的内存管理主要通过源码中zmalloc.h和zmalloc.c两个文件来实现的。Redis为了方便内存的管理，在分配一块内存之后，会将这块内存的大小存入内存块的头部。如图所示，real_ptr是redis调用malloc后返回的指针。redis将内存块的大小size存入头部，size所占据的内存大小是已知的，为size_t类型的长度，然后返回ret_ptr。当需要释放内存的时候，ret_ptr被传给内存管理程序。通过ret_ptr，程序可以很容易的算出real_ptr的值，然后将real_ptr传给free释放内存。
 
-![image](img/5.png)
+<img src="/images/5.png">
 
 
 Redis通过定义一个数组来记录所有的内存分配情况，这个数组的长度为ZMALLOC_MAX_ALLOC_STAT。数组的每一个元素代表当前程序所分配的内存块的个数，且内存块的大小为该元素的下标。在源码中，这个数组为zmalloc_allocations。zmalloc_allocations[16]代表已经分配的长度为16bytes的内存块的个数。zmalloc.c中有一个静态变量used_memory用来记录当前分配的内存总大小。所以，总的来看，Redis采用的是包装的mallc/free，相较于Memcached的内存管理方法来说，要简单很多。
@@ -141,14 +140,14 @@ Memcached是全内存的数据缓冲系统，Redis虽然支持数据的持久化
 Memcached本身并不支持分布式，因此只能在客户端通过像一致性哈希这样的分布式算法来实现Memcached的分布式存储。下图给出了Memcached的分布式存储实现架构。当客户端向Memcached集群发送数据之前，首先会通过内置的分布式算法计算出该条数据的目标节点，然后数据会直接发送到该节点上存储。但客户端查询数据时，同样要计算出查询数据所在的节点，然后直接向该节点发送查询请求以获取数据。
 
 
-![image](img/6.jpg)
+<img src="/images/6.jpg">
 
 相较于Memcached只能采用客户端实现分布式存储，Redis更偏向于在服务器端构建分布式存储。最新版本的Redis已经支持了分布式存储功能。Redis Cluster是一个实现了分布式且允许单点故障的Redis高级版本，它没有中心节点，具有线性可伸缩的功能。下图给出Redis Cluster的分布式存储架构，其中节点与节点之间通过二进制协议进行通信，节点与客户端之间通过ascii协议进行通信。在数据的放置策略上，Redis Cluster将整个key的数值域分成4096个哈希槽，每个节点上可以存储一个或多个哈希槽，也就是说当前Redis Cluster支持的最大节点数就是4096。Redis Cluster使用的分布式算法也很简单：crc16( key ) % HASH_SLOTS_NUMBER。
 
-![image](img/7.jpg)
+<img src="/images/7.jpg">
 
 
 为了保证单点故障下的数据可用性，Redis Cluster引入了Master节点和Slave节点。在Redis Cluster中，每个Master节点都会有对应的两个冗余的Slave节点。这样在整个集群中，任意两个节点的宕机都不会导致数据的不可用。当Master节点退出后，集群会自动选择一个Slave节点成为新的Master节点。
 
-![image](img/8.jpg)
+<img src="/images/8.jpg">
 

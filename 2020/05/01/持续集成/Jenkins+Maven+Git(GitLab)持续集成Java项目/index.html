@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/cat.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/cat.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="CI/CD," />
+
+
+
+
+
+
+
+<meta name="description" content="CI/CD持续集成  Jenkins+Maven+Git(GitLab)持续集成Java项目">
+<meta name="keywords" content="CI&#x2F;CD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins+Maven+Git(GitLab)持续集成Java项目">
+<meta property="og:url" content="http://mroldx.xyz/2020/05/01/持续集成/Jenkins+Maven+Git(GitLab)持续集成Java项目/index.html">
+<meta property="og:site_name" content="沫离">
+<meta property="og:description" content="CI/CD持续集成  Jenkins+Maven+Git(GitLab)持续集成Java项目">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/1381082/w39peslr9p.png?imageView2/2/w/1620">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1733080/201909/1733080-20190930185843004-1191682955.png">
+<meta property="og:image" content="c:/Users/Old丶x/AppData/Roaming/Typora/typora-user-images/image-20200501143558976.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/1381082/smueltu4o1.png?imageView2/2/w/1620">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/1381082/r7v5evbqyb.png?imageView2/2/w/1620">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/1381082/c8v0o8tfko.png?imageView2/2/w/1620">
+<meta property="og:updated_time" content="2020-05-05T07:34:06.946Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins+Maven+Git(GitLab)持续集成Java项目">
+<meta name="twitter:description" content="CI/CD持续集成  Jenkins+Maven+Git(GitLab)持续集成Java项目">
+<meta name="twitter:image" content="https://ask.qcloudimg.com/http-save/1381082/w39peslr9p.png?imageView2/2/w/1620">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mroldx.xyz/2020/05/01/持续集成/Jenkins+Maven+Git(GitLab)持续集成Java项目/"/>
+
+
+
+
+
+  <title>Jenkins+Maven+Git(GitLab)持续集成Java项目 | 沫离</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/xzf520" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沫离</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凋零那一刹那间的美</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-top">
+          <a href="/top/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-signal"></i> <br />
+            
+            阅读排行
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mroldx.xyz/2020/05/01/持续集成/Jenkins+Maven+Git(GitLab)持续集成Java项目/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="沫离">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沫离">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Jenkins+Maven+Git(GitLab)持续集成Java项目</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-01T14:59:51+08:00">
+                2020-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/持续集成/" itemprop="url" rel="index">
+                    <span itemprop="name">持续集成</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/01/持续集成/Jenkins+Maven+Git(GitLab)持续集成Java项目/" class="leancloud_visitors" data-flag-title="Jenkins+Maven+Git(GitLab)持续集成Java项目">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span><span>℃</span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,740
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  CI/CD持续集成  Jenkins+Maven+Git(GitLab)持续集成Java项目
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p class="description"></p>
+
+<a id="more"></a>
+<h1 id="Jenkins-Maven-Git-GitLab-持续集成Java项目"><a href="#Jenkins-Maven-Git-GitLab-持续集成Java项目" class="headerlink" title="Jenkins+Maven+Git(GitLab)持续集成Java项目"></a>Jenkins+Maven+Git(GitLab)持续集成Java项目</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><h3 id="1、本文主要内容"><a href="#1、本文主要内容" class="headerlink" title="1、本文主要内容"></a>1、本文主要内容</h3><ul>
+<li>Jenkins+SSH获取Gitlab代码</li>
+<li>Jenkins+Maven构建Java(Spring Boot)项目配置</li>
+<li>Jenkins发布Spring Boot项目：远程服务器端配置</li>
+<li>Jenkins发布Spring Boot项目：pom.xml编译配置</li>
+<li>Jenkins+SSH将构建输出结果发布到远程服务器并启动应用</li>
+</ul>
+<h3 id="2、环境信息"><a href="#2、环境信息" class="headerlink" title="2、环境信息"></a>2、环境信息</h3><ul>
+<li>服务器</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">服务器名</th>
+<th style="text-align:left">操作系统</th>
+<th style="text-align:left">IP</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">GitLab</td>
+<td style="text-align:left">CentOS 7</td>
+<td style="text-align:left">192.168.56.160</td>
+<td style="text-align:left">部署GitLab社区版</td>
+</tr>
+<tr>
+<td style="text-align:left">Jenkins</td>
+<td style="text-align:left">CentOS 7</td>
+<td style="text-align:left">192.168.56.150</td>
+<td style="text-align:left">部署Jenkins</td>
+</tr>
+<tr>
+<td style="text-align:left">Server</td>
+<td style="text-align:left">CentOS 7</td>
+<td style="text-align:left">192.168.88.155</td>
+<td style="text-align:left">部署Java项目</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>软件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">工具/环境</th>
+<th style="text-align:left">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Jenkins</td>
+<td style="text-align:left">2.176.2</td>
+</tr>
+<tr>
+<td style="text-align:left">Maven</td>
+<td style="text-align:left">3.6.1</td>
+</tr>
+<tr>
+<td style="text-align:left">GitLab</td>
+<td style="text-align:left">GitLab CE 12.1.2</td>
+</tr>
+<tr>
+<td style="text-align:left">JDK</td>
+<td style="text-align:left">1.8.0_181</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3、基础准备"><a href="#3、基础准备" class="headerlink" title="3、基础准备"></a>3、基础准备</h3><ul>
+<li>GitLab部署</li>
+</ul>
+<p>参考：<a href="https://ken.io/note/centos7-gitlab-install-tutorial" target="_blank" rel="noopener">https://ken.io/note/centos7-gitlab-install-tutorial</a></p>
+<p>配置GitLab访问地址为：<code>http://192.168.56.160</code></p>
+<ul>
+<li>Jenkins部署</li>
+</ul>
+<p>参考：<a href="https://ken.io/note/centos7-jenkins-install-tutorial" target="_blank" rel="noopener">https://ken.io/note/centos7-jenkins-install-tutorial</a></p>
+<h2 id="二、-Java应用部署服务器"><a href="#二、-Java应用部署服务器" class="headerlink" title="二、 Java应用部署服务器"></a>二、 Java应用部署服务器</h2><h3 id="1、部署JDK8"><a href="#1、部署JDK8" class="headerlink" title="1、部署JDK8"></a>1、部署JDK8</h3><p>参考：<a href="https://ken.io/note/centos-java-setup" target="_blank" rel="noopener">https://ken.io/note/centos-java-setup</a></p>
+<p>将<code>jdk1.8.0_181</code>部署在目录<code>/usr/java/</code></p>
+<p>部署完成后，jdk的根目录就是：<code>/usr/java/jdk1.8.0_181/</code></p>
+<h3 id="2、开放端口"><a href="#2、开放端口" class="headerlink" title="2、开放端口"></a>2、开放端口</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#开放1000到9999的端口</span><br><span class="line">sudo firewall-cmd --add-port=<span class="number">1000</span><span class="number">-9999</span>/tcp --permanent</span><br><span class="line">sudo firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<h3 id="3、创建应用部署目录"><a href="#3、创建应用部署目录" class="headerlink" title="3、创建应用部署目录"></a>3、创建应用部署目录</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#创建目录</span><br><span class="line">sudo mkdir -p /webroot</span><br><span class="line"></span><br><span class="line">#授权</span><br><span class="line">sudo chown -R app:app /webroot</span><br></pre></td></tr></table></figure>
+<h2 id="三、Jenkins环境准备"><a href="#三、Jenkins环境准备" class="headerlink" title="三、Jenkins环境准备"></a>三、Jenkins环境准备</h2><p>在配置构建任务之前，我们需要在Jenkins服务器配置Maven、Git环境</p>
+<h3 id="1、Maven安装"><a href="#1、Maven安装" class="headerlink" title="1、Maven安装"></a>1、Maven安装</h3><ul>
+<li>下载&amp;解压</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd /home/downloads</span><br><span class="line"></span><br><span class="line">#下载</span><br><span class="line">sudo wget http:<span class="comment">//mirror.bit.edu.cn/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz</span></span><br><span class="line"></span><br><span class="line">#解压到指定目录</span><br><span class="line">sudo mkdir -p /usr/maven</span><br><span class="line">sudo tar -zvxf apache-maven<span class="number">-3.6</span><span class="number">.1</span>-bin.tar.gz -C /usr/maven</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置环境变量</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#修改/etc/profile</span><br><span class="line">sudo vi /etc/profile</span><br><span class="line"></span><br><span class="line">#在文件末尾写入以下内容</span><br><span class="line"><span class="keyword">export</span> MAVEN_HOME=<span class="regexp">/usr/m</span>aven/apache-maven<span class="number">-3.6</span><span class="number">.1</span></span><br><span class="line"><span class="keyword">export</span> PATH=$MAVEN_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">#使更改生效</span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line">#测试</span><br><span class="line">mvn -version</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置Maven仓库</li>
+</ul>
+<p>为了保证jar包的下载速度，修改maven配置使用国内镜像</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#进入Maven根目录</span><br><span class="line">cd $MAVEN_HOME</span><br><span class="line"></span><br><span class="line">#备份配置文件</span><br><span class="line">sudo mv conf/settings.xml conf/settings.xml.bak</span><br><span class="line"></span><br><span class="line">#新建配置文件</span><br><span class="line">sudo vi settings.xml</span><br><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line"></span><br><span class="line">&lt;settings xmlns=<span class="string">"http://maven.apache.org/SETTINGS/1.0.0"</span></span><br><span class="line">          xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">          xsi:schemaLocation=<span class="string">"http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"</span>&gt;</span><br><span class="line"></span><br><span class="line">  &lt;mirrors&gt;</span><br><span class="line"></span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">      &lt;id&gt;alimaven&lt;<span class="regexp">/id&gt;</span></span><br><span class="line"><span class="regexp">      &lt;name&gt;aliyun maven&lt;/</span>name&gt;</span><br><span class="line">      &lt;url&gt;https:<span class="comment">//maven.aliyun.com/repository/public/&lt;/url&gt;</span></span><br><span class="line">      &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;        </span><br><span class="line">    &lt;<span class="regexp">/mirror&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    &lt;mirror&gt;</span></span><br><span class="line"><span class="regexp">      &lt;id&gt;nexus-163&lt;/i</span>d&gt;</span><br><span class="line">      &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">      &lt;name&gt;Nexus <span class="number">163</span>&lt;<span class="regexp">/name&gt;</span></span><br><span class="line"><span class="regexp">      &lt;url&gt;http:/</span><span class="regexp">/mirrors.163.com/m</span>aven/repository/maven-public/&lt;/url&gt;</span><br><span class="line">    &lt;<span class="regexp">/mirror&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    &lt;mirror&gt;</span></span><br><span class="line"><span class="regexp">        &lt;id&gt;central&lt;/i</span>d&gt;</span><br><span class="line">        &lt;name&gt;Maven Repository Switchboard&lt;<span class="regexp">/name&gt;</span></span><br><span class="line"><span class="regexp">        &lt;url&gt;http:/</span><span class="regexp">/repo1.maven.org/m</span>aven2/&lt;/url&gt;</span><br><span class="line">        &lt;mirrorOf&gt;central&lt;<span class="regexp">/mirrorOf&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/mi</span>rror&gt;</span><br><span class="line"></span><br><span class="line">  &lt;<span class="regexp">/mirrors&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;/</span>settings&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2、Git-Client安装"><a href="#2、Git-Client安装" class="headerlink" title="2、Git Client安装"></a>2、Git Client安装</h3><ul>
+<li>安装</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>密钥准备</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#生成密钥</span><br><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将公钥添加到GitLab</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看公钥</span><br><span class="line">cat ~<span class="regexp">/.ssh/i</span>d_rsa.pub</span><br></pre></td></tr></table></figure>
+<p>访问GitLab：<code>http://192.168.56.150:/profile/keys</code>，添加公钥</p>
+<ul>
+<li>添加Git SSH凭据</li>
+</ul>
+<p>后面配置Jenkins构建任务代码仓库时需要用到</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查询SSH私钥</span><br><span class="line">cat ~<span class="regexp">/.ssh/i</span>d_rsa</span><br></pre></td></tr></table></figure>
+<p>访问:<code>/credentials/store/system/domain/_/newCredentials</code> 直接进入凭据添加界面</p>
+<p>类型选择：<code>SSH Username with private key</code></p>
+<p><img src="https://ask.qcloudimg.com/http-save/1381082/w39peslr9p.png?imageView2/2/w/1620" alt="img">jenkins-credentials-gitlab-key</p>
+<h3 id="3、插件安装"><a href="#3、插件安装" class="headerlink" title="3、插件安装"></a>3、插件安装</h3><ul>
+<li>插件列表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">插件名</th>
+<th style="text-align:left">版本</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://ken.io/note/centos7-gitlab-install-tutorial" target="_blank" rel="noopener">Git</a></td>
+<td style="text-align:left">3.11.0</td>
+<td style="text-align:left">使用Git访问远程仓库</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://ken.io/note/centos7-gitlab-install-tutorial" target="_blank" rel="noopener">Maven Integration</a></td>
+<td style="text-align:left">3.3</td>
+<td style="text-align:left">使用Maven进行编译等</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://ken.io/note/centos7-gitlab-install-tutorial" target="_blank" rel="noopener">Publish Over SSH </a></td>
+<td style="text-align:left">1.20.1</td>
+<td style="text-align:left">用于将编译结果发布到远程服务器</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>安装说明</li>
+</ul>
+<p>访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.56.150:8080/pluginManager/available</span><br></pre></td></tr></table></figure>
+<p><code>Ctrl+F</code>搜索插件名，勾选后，进行安装</p>
+<p>安装完成后，重启jenkins</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart jenkins</span><br></pre></td></tr></table></figure>
+<h3 id="4、Jenkins插件-环境配置"><a href="#4、Jenkins插件-环境配置" class="headerlink" title="4、Jenkins插件/环境配置"></a>4、Jenkins插件/环境配置</h3><p>在菜单：系统管理-&gt;全局工具配置中对插件相关工具进行配置</p>
+<p><img src="https://img2018.cnblogs.com/blog/1733080/201909/1733080-20190930185843004-1191682955.png" alt="img"></p>
+<ul>
+<li>Publish over SSH</li>
+</ul>
+<p>然后在菜单：系统管理-&gt;系统设置对Publish over SSH进行设置</p>
+<p><img src="C:\Users\Old丶x\AppData\Roaming\Typora\typora-user-images\image-20200501143558976.png" alt="image-20200501143558976"></p>
+<p>主要配置项说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Name</td>
+<td style="text-align:left">服务器名，随便写，方便记忆即可</td>
+</tr>
+<tr>
+<td style="text-align:left">Hostname</td>
+<td style="text-align:left">服务器IP，或者可以被正常解析的服务器名/域名</td>
+</tr>
+<tr>
+<td style="text-align:left">Username</td>
+<td style="text-align:left">用于登录的账号</td>
+</tr>
+<tr>
+<td style="text-align:left">Remote Dictionary</td>
+<td style="text-align:left">远程目录，绝对路径</td>
+</tr>
+<tr>
+<td style="text-align:left">Passphrase/Password</td>
+<td style="text-align:left">密码</td>
+</tr>
+<tr>
+<td style="text-align:left">Port</td>
+<td style="text-align:left">SSH端口</td>
+</tr>
+</tbody>
+</table>
+<p>配置完成后可以点击<code>Test Configuration</code>进行连接测试  </p>
+<h2 id="四、Jenkins构建任务"><a href="#四、Jenkins构建任务" class="headerlink" title="四、Jenkins构建任务"></a>四、Jenkins构建任务</h2><h3 id="1、示例项目准备"><a href="#1、示例项目准备" class="headerlink" title="1、示例项目准备"></a>1、示例项目准备</h3><blockquote>
+<p>如果已经有现成项目可忽略此步骤</p>
+</blockquote>
+<p>访问：<code>http://192.168.56.150/projects/new</code>创建项目:<code>helloworld</code></p>
+<ul>
+<li>创建SpringBoot应用</li>
+</ul>
+<p>参考：<a href="https://ken.io/note/springboot-course-basic-helloworld" target="_blank" rel="noopener">https://ken.io/note/springboot-course-basic-helloworld</a> 创建SpringBoot应用</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Maven模板</td>
+<td style="text-align:left">maven-archetype-webapp</td>
+</tr>
+<tr>
+<td style="text-align:left">GroupId</td>
+<td style="text-align:left">io.ken.tutorial</td>
+</tr>
+<tr>
+<td style="text-align:left">ArtifactId</td>
+<td style="text-align:left">helloworld</td>
+</tr>
+<tr>
+<td style="text-align:left">Version</td>
+<td style="text-align:left">1.0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>配置编译选项</li>
+</ul>
+<p>修改pom.xml，以满足编译要求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;finalName&gt;helloworld&lt;<span class="regexp">/finalName&gt;</span></span><br><span class="line"><span class="regexp">    &lt;resources&gt;</span></span><br><span class="line"><span class="regexp">      &lt;resource&gt;</span></span><br><span class="line"><span class="regexp">        &lt;directory&gt;src/m</span>ain/resources&lt;<span class="regexp">/directory&gt;</span></span><br><span class="line"><span class="regexp">        &lt;filtering&gt;false&lt;/</span>filtering&gt;</span><br><span class="line">      &lt;<span class="regexp">/resource&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>resources&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">      &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;<span class="regexp">/groupId&gt;</span></span><br><span class="line"><span class="regexp">        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/</span>artifactId&gt;</span><br><span class="line">      &lt;<span class="regexp">/plugin&gt;</span></span><br><span class="line"><span class="regexp">      &lt;plugin&gt;</span></span><br><span class="line"><span class="regexp">        &lt;groupId&gt;org.apache.maven.plugins&lt;/g</span>roupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-compiler-plugin&lt;<span class="regexp">/artifactId&gt;</span></span><br><span class="line"><span class="regexp">        &lt;version&gt;3.8.1&lt;/</span>version&gt;</span><br><span class="line">        &lt;configuration&gt;</span><br><span class="line">          &lt;source&gt;<span class="number">1.8</span>&lt;<span class="regexp">/source&gt;</span></span><br><span class="line"><span class="regexp">          &lt;target&gt;1.8&lt;/</span>target&gt;</span><br><span class="line">        &lt;<span class="regexp">/configuration&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>plugin&gt;</span><br><span class="line">    &lt;<span class="regexp">/plugins&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>build&gt;</span><br></pre></td></tr></table></figure>
+<p>配置application.yml，配置应用端口为8081</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+<p>项目准备完成后，在GitLab账号<code>ken</code>下面创建项目<code>helloworld</code>并将刚才创建的文件提交上去</p>
+<blockquote>
+<p>示例代码：<a href="https://gitlab.com/ken-io/springboot-helloworld" target="_blank" rel="noopener">https://gitlab.com/ken-io/springboot-helloworld</a></p>
+</blockquote>
+<h3 id="2、Jenkins任务创建"><a href="#2、Jenkins任务创建" class="headerlink" title="2、Jenkins任务创建"></a>2、Jenkins任务创建</h3><p><img src="https://ask.qcloudimg.com/http-save/1381082/smueltu4o1.png?imageView2/2/w/1620" alt="img">jenkins-create-job-maven-springboot</p>
+<p>选择：<code>构建一个maven项目</code>，然后确定即可</p>
+<h3 id="3、配置源代码管理"><a href="#3、配置源代码管理" class="headerlink" title="3、配置源代码管理"></a>3、配置源代码管理</h3><p><img src="https://ask.qcloudimg.com/http-save/1381082/r7v5evbqyb.png?imageView2/2/w/1620" alt="img">jenkins-create-job-maven-springboot-sourcecode-git-ssh</p>
+<p>这里我们选择Git，并配置SSH Git地址，选择之前创建好的凭据/密钥</p>
+<h3 id="4、Publish-over-SSH配置"><a href="#4、Publish-over-SSH配置" class="headerlink" title="4、Publish over SSH配置"></a>4、Publish over SSH配置</h3><p><img src="https://ask.qcloudimg.com/http-save/1381082/c8v0o8tfko.png?imageView2/2/w/1620" alt="img">jenkins-create-job-maven-springboot-buildenv-publishoverssh</p>
+<p>配置项说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">值</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Name</td>
+<td style="text-align:left">appserver</td>
+<td style="text-align:left">SSH Server名称，根据之前配置选择即可</td>
+</tr>
+<tr>
+<td style="text-align:left">Source files</td>
+<td style="text-align:left">target/*.jar</td>
+<td style="text-align:left">需要传输的文件，支持通配符，编译文件默认都在项目根目录下的target目录中</td>
+</tr>
+<tr>
+<td style="text-align:left">Remove prefix</td>
+<td style="text-align:left">target</td>
+<td style="text-align:left">移除匹配到的文件路径的前缀，如果留空，会在远程服务器上创建对应的目录</td>
+</tr>
+<tr>
+<td style="text-align:left">Remote directory</td>
+<td style="text-align:left">helloworld/</td>
+<td style="text-align:left">远程服务器上的项目目录，该目录会被创建在Publish over SSH配置的远程根目录中(/webroot)</td>
+</tr>
+<tr>
+<td style="text-align:left">Exec command</td>
+<td style="text-align:left"><a href="https://ken.io/note/centos7-gitlab-install-tutorial" target="_blank" rel="noopener">—</a></td>
+<td style="text-align:left">文件传输到远程服务器后执行的命令</td>
+</tr>
+</tbody>
+</table>
+<p>命令示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">APP_NAME=helloworld.jar</span><br><span class="line">cd /webroot/helloworld</span><br><span class="line">mkdir -p logs</span><br><span class="line"></span><br><span class="line">#找到包含AppName的进程</span><br><span class="line">PROCESS=<span class="string">`ps -ef|grep $APP_NAME|grep -v grep  |awk '&#123; print $2&#125;'`</span></span><br><span class="line">#循环停用进程直到成功</span><br><span class="line"><span class="keyword">while</span> :</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  kill <span class="number">-9</span> $PROCESS &gt; <span class="regexp">/dev/</span><span class="literal">null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">  <span class="keyword">if</span> [ $? -ne <span class="number">0</span> ];then</span><br><span class="line">   <span class="keyword">break</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">   <span class="keyword">continue</span></span><br><span class="line">fi</span><br><span class="line">done</span><br><span class="line">echo <span class="string">'Stop Successed'</span></span><br><span class="line"></span><br><span class="line">#启动应用</span><br><span class="line">nohup  /usr/java/jdk1<span class="number">.8</span><span class="number">.0</span>_181/bin/java -jar $APP_NAME &gt;&gt;logs/start.log <span class="number">2</span>&gt;&gt;logs/startError.log &amp;</span><br><span class="line"></span><br><span class="line">#sleep等待15秒后，判断包含AppName的线程是否存在</span><br><span class="line">sleep <span class="number">15</span></span><br><span class="line"><span class="keyword">if</span> test $(pgrep -f $APP_NAME|wc -l) -eq <span class="number">0</span></span><br><span class="line">then</span><br><span class="line">   echo <span class="string">"Start Failed"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">   echo <span class="string">"Start Successed"</span></span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="5、构建"><a href="#5、构建" class="headerlink" title="5、构建"></a>5、构建</h3><p>点击立即构建即可进行项目构建，构建完成后，构建记录的图标会根据构建结果不同显示成不同颜色。  </p>
+<p>蓝色、黄色、红色分别表示：成功、未完成、失败</p>
+<p>如果构建并没有成功，可以点击构建记录，在后在<code>控制台输出</code>中查看构建记录</p>
+<h2 id="五-，视频演示成果"><a href="#五-，视频演示成果" class="headerlink" title="五 ，视频演示成果"></a>五 ，视频演示成果</h2>
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+<div>
+      
+        
+      
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CI-CD/" rel="tag"><i class="fa fa-tag"></i> CI/CD</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+<div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦亲&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/29/redis/redis缓存与memcache的区别/" rel="next" title="redis缓存与memcache的区别">
+                <i class="fa fa-chevron-left"></i> redis缓存与memcache的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+      <!--MOB SHARE BEGIN-->
+<div class="-hoofoo-share-title">分享到：</div>
+<div class="-hoofoo-share-buttons">
+    <div class="-mob-share-weibo -hoofoo-share-weibo -hoofoo-share-ui-button"><i class="fa fa-weibo" aria-hidden="true"></i></div>
+    <div class="-mob-share-weixin -hoofoo-share-weixin -hoofoo-share-ui-button"><i class="fa fa-weixin" aria-hidden="true"></i></div>
+    <div class="-mob-share-qq -hoofoo-share-qq -hoofoo-share-ui-button"><i class="fa fa-qq" aria-hidden="true"></i></div>
+    <div class="-mob-share-twitter -hoofoo-share-twitter -hoofoo-share-ui-button"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+    <div class="-hoofoo-share-more -hoofoo-share-ui-button -mob-share-open"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></div>
+</div>
+<div class="-mob-share-ui" style="display: none">
+    <ul class="-mob-share-list">
+        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+        <li class="-mob-share-weixin"><p>微信</p></li>
+        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+        <li class="-mob-share-qq"><p>QQ好友</p></li>
+        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+        <li class="-mob-share-renren"><p>人人网</p></li>
+        <li class="-mob-share-kaixin"><p>开心网</p></li>
+        <li class="-mob-share-douban"><p>豆瓣</p></li>
+        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+        <li class="-mob-share-mingdao"><p>明道</p></li>
+        <li class="-mob-share-pengyou"><p>朋友网</p></li>
+        <li class="-mob-share-facebook"><p>Facebook</p></li>
+        <li class="-mob-share-twitter"><p>Twitter</p></li>
+        <li class="-mob-share-pocket"><p>Pocket</p></li>
+        <li class="-mob-share-google"><p>Google+</p></li>
+        <li class="-mob-share-tumblr"><p>Tumblr</p></li>
+        <li class="-mob-share-instapaper"><p>Instapaper</p></li>
+        <li class="-mob-share-linkedin"><p>Linkedin</p></li>
+    </ul>
+    <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=26bd318095f14"></script>
+<!--MOB SHARE END-->
+
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1.png"
+                alt="沫离" />
+            
+              <p class="site-author-name" itemprop="name">沫离</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xzf520" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-GitHub"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="974751082@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://developer.apple.com/swift/" title="Swift 4" target="_blank">Swift 4</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://developer.apple.com/documentation/objectivec" title="Objective-C" target="_blank">Objective-C</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          <div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/01/2019 00:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkins-Maven-Git-GitLab-持续集成Java项目"><span class="nav-number">1.</span> <span class="nav-text">Jenkins+Maven+Git(GitLab)持续集成Java项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、前言"><span class="nav-number">1.1.</span> <span class="nav-text">一、前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、本文主要内容"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、本文主要内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、环境信息"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、环境信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、基础准备"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、基础准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-Java应用部署服务器"><span class="nav-number">1.2.</span> <span class="nav-text">二、 Java应用部署服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、部署JDK8"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、部署JDK8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、开放端口"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、开放端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、创建应用部署目录"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、创建应用部署目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Jenkins环境准备"><span class="nav-number">1.3.</span> <span class="nav-text">三、Jenkins环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Maven安装"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、Maven安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Git-Client安装"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、Git Client安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、插件安装"><span class="nav-number">1.3.3.</span> <span class="nav-text">3、插件安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Jenkins插件-环境配置"><span class="nav-number">1.3.4.</span> <span class="nav-text">4、Jenkins插件/环境配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Jenkins构建任务"><span class="nav-number">1.4.</span> <span class="nav-text">四、Jenkins构建任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、示例项目准备"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、示例项目准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Jenkins任务创建"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、Jenkins任务创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、配置源代码管理"><span class="nav-number">1.4.3.</span> <span class="nav-text">3、配置源代码管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Publish-over-SSH配置"><span class="nav-number">1.4.4.</span> <span class="nav-text">4、Publish over SSH配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、构建"><span class="nav-number">1.4.5.</span> <span class="nav-text">5、构建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-，视频演示成果"><span class="nav-number">1.5.</span> <span class="nav-text">五 ，视频演示成果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沫离</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+<span class="post-meta-divider">|</span>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共14.4k字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("dSEzksBvVcKjRW17O9ks40ew-gzGzoHsz", "x5zy0MVMa4Ch9FK2rOxXjM4q");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  <script type="text/javascript">
+  wpac_init = window.wpac_init || [];
+  wpac_init.push({widget: 'Rating', id: 12509,
+    el: 'wpac-rating',
+    color: 'fc6423'
+  });
+  (function() {
+    if ('WIDGETPACK_LOADED' in window) return;
+    WIDGETPACK_LOADED = true;
+    var mc = document.createElement('script');
+    mc.type = 'text/javascript';
+    mc.async = true;
+    mc.src = '//embed.widgetpack.com/widget.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+  })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript">
+    //微信二维码点击背景关闭
+    $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
+         $(".-mob-share-weixin-qrcode-close").trigger("click");
+    }); 
+</script>
+
+
+
+
+  <script type="text/javascript" color="250,100,49" opacity='0.5' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+
+</body>
+</html>

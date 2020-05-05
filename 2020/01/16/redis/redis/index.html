@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/cat.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/cat.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+
+
+<meta name="description" content="安装、主从复制,redis缓存与memcache的区别,redis原生命令api,redis 命令参考,Redis 教程">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis缓存">
+<meta property="og:url" content="http://mroldx.xyz/2020/01/16/redis/redis/index.html">
+<meta property="og:site_name" content="沫离">
+<meta property="og:description" content="安装、主从复制,redis缓存与memcache的区别,redis原生命令api,redis 命令参考,Redis 教程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="localhost:4000/images/1.jpg">
+<meta property="og:updated_time" content="2020-05-05T07:37:09.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis缓存">
+<meta name="twitter:description" content="安装、主从复制,redis缓存与memcache的区别,redis原生命令api,redis 命令参考,Redis 教程">
+<meta name="twitter:image" content="localhost:4000/images/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mroldx.xyz/2020/01/16/redis/redis/"/>
+
+
+
+
+
+  <title>redis缓存 | 沫离</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/xzf520" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沫离</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凋零那一刹那间的美</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-top">
+          <a href="/top/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-signal"></i> <br />
+            
+            阅读排行
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mroldx.xyz/2020/01/16/redis/redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="沫离">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沫离">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis缓存</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-16T23:50:31+08:00">
+                2020-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/01/16/redis/redis/" class="leancloud_visitors" data-flag-title="redis缓存">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span><span>℃</span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,678
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  安装、主从复制,redis缓存与memcache的区别,redis原生命令api,redis 命令参考,Redis 教程
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p class="description"></p>
+
+<a id="more"></a>
+<p><img src="localhost:4000/images/1.jpg" alt="image"></p>
+<ul>
+<li><a href="redis-master-slave.md">安装、主从复制</a></li>
+<li><a href="redis缓存与memcache的区别.md">redis缓存与memcache的区别</a></li>
+<li><a href="http://www.runoob.com/redis/redis-sorted-sets.html" target="_blank" rel="noopener">redis原生命令api</a></li>
+<li><a href="http://doc.redisfans.com/index.html" target="_blank" rel="noopener">redis 命令参考</a></li>
+<li><a href="http://www.runoob.com/redis/redis-pub-sub.html" target="_blank" rel="noopener">Redis 教程</a></li>
+</ul>
+<h2 id="redis缓存"><a href="#redis缓存" class="headerlink" title="redis缓存"></a>redis缓存</h2><h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><ul>
+<li><a href="redis-master-slave.md">安装、主从复制</a></li>
+<li><a href="redis缓存与memcache的区别.md">redis缓存与memcache的区别</a></li>
+<li><a href="http://www.runoob.com/redis/redis-sorted-sets.html" target="_blank" rel="noopener">redis原生命令api</a></li>
+<li><a href="http://doc.redisfans.com/index.html" target="_blank" rel="noopener">redis 命令参考</a></li>
+<li><a href="http://www.runoob.com/redis/redis-pub-sub.html" target="_blank" rel="noopener">Redis 教程</a></li>
+<li>redis cluster<ul>
+<li><a href="http://www.redis.cn/topics/cluster-tutorial.html" target="_blank" rel="noopener">Redis 集群教程</a></li>
+<li><a href="https://www.cnblogs.com/lykxqhh/p/5690923.html" target="_blank" rel="noopener">Redis Cluster集群搭建</a></li>
+</ul>
+</li>
+</ul>
+<p>客户端：</p>
+<ul>
+<li>Jedis<ul>
+<li><a href="https://github.com/xetorthio/jedis" target="_blank" rel="noopener">github源码</a></li>
+</ul>
+</li>
+<li>Redic<ul>
+<li>Redis缓存客户端，支持读写分离和分片。</li>
+<li><a href="https://gitee.com/robertleepeak/redic" target="_blank" rel="noopener">源码</a></li>
+</ul>
+</li>
+<li>Codis<ul>
+<li>在应用层和缓存服务器中间增加一个代理层，根据分片规则来路由请求。</li>
+<li><a href="http://www.cnblogs.com/xuanzhi201111/p/4425194.html" target="_blank" rel="noopener">Codis集群的搭建与使用</a></li>
+</ul>
+</li>
+</ul>
+<p>资料收集：</p>
+<ul>
+<li><a href="http://blog.csdn.net/world6/article/details/79381682" target="_blank" rel="noopener">redis为什么是单线程？</a></li>
+<li><a href="https://mp.weixin.qq.com/s/m-RdJQdG-qW-BLquorhMlQ" target="_blank" rel="noopener">Redis为什么这么快？一文深入了解Redis内存模型！</a></li>
+<li><a href="https://mp.weixin.qq.com/s/vxJCG0Nk4csbZ1axLy0bfQ" target="_blank" rel="noopener">3台机器轻松搭建一个高可用Redis服务架构</a></li>
+<li><a href="https://mp.weixin.qq.com/s/fpupqLp-wjR8fQvYSQhVLg" target="_blank" rel="noopener">Redis 内存为什么不宜过大</a></li>
+<li><a href="https://mp.weixin.qq.com/s/BoLsVKYyu8yRXZbxd1uuQw" target="_blank" rel="noopener">史上最全Redis高可用技术解决方案大全</a></li>
+</ul>
+<p>业务应用：</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/2FEbkas_m1WnYUqjVpMkWw" target="_blank" rel="noopener">同程凤凰缓存系统基于Redis的设计与实践</a></li>
+<li><a href="http://mp.weixin.qq.com/s/YhrJprLWjoZa2tU3qY8XZw" target="_blank" rel="noopener">携程开源其Redis多数据中心解决方案XPipe</a></li>
+</ul>
+<p>前沿：</p>
+<ul>
+<li><a href="redis-new-feature.md">redis不同版本新特性</a></li>
+</ul>
+<hr>
+<p>redis采用C编写，redis服务器是核心业务采用单线程模式，无锁竞争且基于内存操作，执行效率非常高。</p>
+<p>如果开启备份机制，会fork子线程来处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用的比较多的redis客户端jedis：</span><br><span class="line">https://github.com/xetorthio/jedis</span><br></pre></td></tr></table></figure>
+<h3 id="核心逻辑："><a href="#核心逻辑：" class="headerlink" title="核心逻辑："></a>核心逻辑：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">protected Connection sendCommand(final Command cmd, final byte[]... args) &#123;</span><br><span class="line">try &#123;</span><br><span class="line">	//建立连接，包装RedisOutputStream和RedisInputStream</span><br><span class="line">    connect();</span><br><span class="line">    //发送执行命令</span><br><span class="line">    Protocol.sendCommand(outputStream, cmd, args);</span><br><span class="line">    lastAccessTime = System.currentTimeMillis();</span><br><span class="line">    pipelinedCommands++;</span><br><span class="line">    return this;</span><br><span class="line">&#125; catch (JedisConnectionException ex) &#123;</span><br><span class="line">	System.err.println(ex.getMessage());</span><br><span class="line">    // Any other exceptions related to connection?</span><br><span class="line">    broken = true;</span><br><span class="line">    throw ex;</span><br><span class="line">&#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>Command内提供了多种redis操作命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public static enum Command &#123;</span><br><span class="line">PING, SET, GET, QUIT, EXISTS, DEL, TYPE, FLUSHDB, KEYS, RANDOMKEY, RENAME, RENAMENX, RENAMEX, DBSIZE, EXPIRE, EXPIREAT, TTL, SELECT, MOVE, FLUSHALL, GETSET, MGET, SETNX, SETEX, MSET, MSETNX, DECRBY, DECR, INCRBY, INCR, APPEND, SUBSTR, HSET, HGET, HSETNX, HMSET, HMGET, HINCRBY, HEXISTS, HDEL, HLEN, HKEYS, HVALS, HGETALL, RPUSH, LPUSH, LLEN, LRANGE, LTRIM, LINDEX, LSET, LREM, LPOP, RPOP, RPOPLPUSH, SADD, SMEMBERS, SREM, SPOP, SMOVE, SCARD, SISMEMBER, SINTER, SINTERSTORE, SUNION, SUNIONSTORE, SDIFF, SDIFFSTORE, SRANDMEMBER, ZADD, ZRANGE, ZREM, ZINCRBY, ZRANK, ZREVRANK, ZREVRANGE, ZCARD, ZSCORE, MULTI, DISCARD, EXEC, WATCH, UNWATCH, SORT, BLPOP, BRPOP, AUTH, SUBSCRIBE, PUBLISH, UNSUBSCRIBE, PSUBSCRIBE, PUNSUBSCRIBE, PUBSUB, ZCOUNT, ZRANGEBYSCORE, ZREVRANGEBYSCORE, ZREMRANGEBYRANK, ZREMRANGEBYSCORE, ZUNIONSTORE, ZINTERSTORE, ZLEXCOUNT, ZRANGEBYLEX, ZREMRANGEBYLEX, SAVE, BGSAVE, BGREWRITEAOF, LASTSAVE, SHUTDOWN, INFO, MONITOR, SLAVEOF, CONFIG, STRLEN, SYNC, LPUSHX, PERSIST, RPUSHX, ECHO, LINSERT, DEBUG, BRPOPLPUSH, SETBIT, GETBIT, BITPOS, SETRANGE, GETRANGE, EVAL, EVALSHA, SCRIPT, SLOWLOG, OBJECT, BITCOUNT, BITOP, SENTINEL, DUMP, RESTORE, PEXPIRE, PEXPIREAT, PTTL, INCRBYFLOAT, PSETEX, CLIENT, TIME, MIGRATE, HINCRBYFLOAT, SCAN, HSCAN, SSCAN, ZSCAN, WAIT, CLUSTER, ASKING, PFADD, PFCOUNT, PFMERGE;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public String set(final String key, final String value, final String nxxx,</span><br><span class="line">    final String expx, final long time) &#123;</span><br><span class="line">checkIsInMulti();</span><br><span class="line">client.set(key, value, nxxx, expx, time);</span><br><span class="line">//返回结果</span><br><span class="line">return client.getStatusCodeReply();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="不同类型长度限制："><a href="#不同类型长度限制：" class="headerlink" title="不同类型长度限制："></a>不同类型长度限制：</h3><ul>
+<li>string 最大512M</li>
+<li>List 最大长度 （2的32次方-1）,有序可重复</li>
+<li>Sets 最大长度 （2的32次方-1），不允许重复，自动去重</li>
+<li>Sorted sets，同上，支持按score排序</li>
+<li>Hashes kv对数（2的32次方-1）</li>
+</ul>
+<h3 id="内部方法详解："><a href="#内部方法详解：" class="headerlink" title="内部方法详解："></a>内部方法详解：</h3><h4 id="1-String"><a href="#1-String" class="headerlink" title="1.String"></a>1.String</h4><ul>
+<li><p>String setBin(String key, byte[] value) </p>
+<p>按字节数组关联到key下</p>
+</li>
+<li><p>byte[] getBin(String key) </p>
+<p>根据key查找对应下的字节数组</p>
+</li>
+<li><p>String set(String key, String value)  </p>
+<p>将字符串值value关联到key</p>
+</li>
+<li><p>String get(String key)</p>
+<p>返回key所关联的字符串值,如果key不存在则返回null</p>
+</li>
+<li><p>long setnx(String key, String value)</p>
+<p>将字符串值value关联到key，如果key已存在则不做任何改变。返回1表示key不存在，第一次设置；返回0表示key已经存在</p>
+</li>
+<li><p>String setex(String key, int seconds, String value)</p>
+<p>将值value关联到key，并将key的生命周期设为seconds(以秒为单位)。如果key 已经存在，SETEX命令将覆写旧值。 </p>
+</li>
+<li><p>long append(String key, String value)</p>
+<p>如果key已经存在并且是一个字符串，APPEND命令将value追加到key原来的值之后<br><br>如果key不存在，APPEND就简单地将给定key设为value，同 SET key value</p>
+</li>
+<li><p>long strlen(String key) throws RedisException;</p>
+<p>获取key所对应的value字符串长度</p>
+</li>
+<li><p>long incr(String key) </p>
+<p>将key中储存的数字值加1,如果key不存在,以0为key的初始值,然后执行INCR操作。线程安全</p>
+</li>
+<li><p>long incrBy(String key, long n)</p>
+<p>将key中储存的数字值加n,如果key不存在,以0为key的初始值,然后执行INCRBY操作</p>
+</li>
+<li><p>long decr(String key)</p>
+<p>将key中储存的数字值减1,如果key不存在,以0为key的初始值,然后执行DECR操作。</p>
+</li>
+<li><p>long decrBy(String key, long n)</p>
+<p>将key中储存的数字值减n,如果key不存在,以0为key的初始值,然后执行DECRBY操        </p>
+</li>
+<li><p>String getSet(String key, String value) </p>
+<p>设置key为当前值，并返回旧的值</p>
+</li>
+<li>String set(String key, String value, String nxxx, String expx, long time) throws RedisException;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">将字符串值value关联到key:</span><br><span class="line">nxxx：必须是NX或者XX，NX表示不存在则设置否则不做操作；XX表示存在才设置否则不做操作</span><br><span class="line">expx：过期时间单位必须是EX或PX，EX表示单位是“秒”，PX表示单位是“毫秒”</span><br><span class="line">time：过期时间，前一个参数是&quot;EX&quot;的话单位为“秒”，是&quot;PX&quot;的话单位为“毫秒”</span><br><span class="line"></span><br><span class="line">@return 操作成功的话返回字符串OK，否则返回null</span><br><span class="line"></span><br><span class="line">ps：从Redis 2.6.12 版本开始支持</span><br></pre></td></tr></table></figure>
+<h3 id="2-List"><a href="#2-List" class="headerlink" title="2.List"></a>2.List</h3><p>Redis lists基于Linked Lists实现。这意味着即使在一个list中有数百万个元素，在头部或尾部添加一个元素的操作，其时间复杂度也是常数级别的。用LPUSH 命令在十个元素的list头部添加新元素，和在千万元素list头部添加新元素的速度相同</p>
+<ul>
+<li><p>long lpush(String key, String value) </p>
+<p>将值value插入到列表key的表头。 如果key不存在，一个空列表会被创建并执行LPUSH操作</p>
+</li>
+<li><p>long lpushBin(String key, byte[] value)</p>
+<p>同上</p>
+</li>
+<li><p>long rpush(String key, String value) </p>
+<p>将值value插入到列表key的表尾。 如果key不存在，一个空列表会被创建并执行RPUSH操作</p>
+</li>
+<li><p>long rpushBin(String key, byte[] value) </p>
+<p>同上</p>
+</li>
+<li><p>String lpop(String key)</p>
+<p>移除并返回列表key的头元素</p>
+</li>
+<li><p>byte[] lpopBin(String key)</p>
+<p>同上</p>
+</li>
+<li><p>String rpop(String key)</p>
+<p>移除并返回列表key的尾元素</p>
+</li>
+<li><p>byte[] rpopBin(String key)</p>
+<p>同上</p>
+</li>
+<li><p>long llen(String key) </p>
+<p>计算列表长度</p>
+</li>
+<li><p>List<string> lrange(String key, long start, long end) </string></p>
+<p>返回列表key中指定区间内的元素，[start,end]，区间为0开始</p>
+</li>
+<li><p>String ltrim(String key, int start, int end)</p>
+<p>列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除</p>
+</li>
+<li><p>long lrem(final String key, final long count, final String value)</p>
+<p>根据参数count的值，移除列表中与参数value相等的元素<br><br>count的值可以是以下几种：<br><br>count &gt; 0: 从表头开始向表尾搜索，移除与value相等的元素，数量为count <br><br>count &lt; 0: 从表尾开始向表头搜索，移除与value相等的元素，数量为count的绝对值 <br><br>count = 0: 移除表中所有与value相等的值 <br></p>
+</li>
+</ul>
+<h4 id="3-Set"><a href="#3-Set" class="headerlink" title="3.Set"></a>3.Set</h4><ul>
+<li><p>long sadd(String key, String member)</p>
+<p>将member单个元素加入到集合key当中</p>
+</li>
+<li><p>long sadd(String key, String… members)</p>
+<p>将members元素数组加入到集合key当中</p>
+</li>
+<li><p>long srem(String key, String member)</p>
+<p>移除集合中的member元素</p>
+</li>
+<li><p>long scard(String key)</p>
+<p>集合中元素的数量</p>
+</li>
+<li><p>Set<string> smembers(String key)</string></p>
+<p>返回set中的所有元素</p>
+</li>
+</ul>
+<h4 id="4-sorted-set"><a href="#4-sorted-set" class="headerlink" title="4.sorted set"></a>4.sorted set</h4><ul>
+<li><p>long zadd(String key, double score, String member)</p>
+<p>将member元素及其score值加入到有序集key当中</p>
+</li>
+<li><p>double zincrby(String key, double score, String member)</p>
+<p>对member元素增加score值</p>
+</li>
+<li><p>long zrem(String key, String member)</p>
+<p>移除有序集合key中的成员member，如果member不是有序集中的成员，不做任何操作</p>
+</li>
+<li><p>long zremrangeByScore(String key, double start, double end)</p>
+<p>删除的有序集合保存在key的最小值和最大值(含)之间的分数的所有元素</p>
+</li>
+<li><p>long zcard(String key)</p>
+<p>集合长度</p>
+</li>
+<li><p>long zcount(String key, double min, double max)</p>
+<p>有序集key中，score值在min和max之间的成员数量</p>
+</li>
+<li><p>double zscore(String key, String member)</p>
+<p>有序集key中，成员member的score值</p>
+</li>
+<li><p>long zrank(String key, String member)</p>
+<p>返回有序集key中成员member的排名。其中有序集成员按score值递增(从小到大)顺序排列<br><br>排名以0为底，也就是说，score值最小的成员排名为0</p>
+</li>
+</ul>
+<ul>
+<li><p>Set\<string> zrange(String key, int start, int end)</string></p>
+<p>返回索引区间之间的元素，最小元素索引号为0，[start,end]</p>
+</li>
+<li><p>Set\<string> zrangeByScore(String key, double min, double max)</string></p>
+<p>返回分数之间的元素,[min,max]</p>
+</li>
+<li><p>Set\<string> zrangeByScore(String key, double min, double max, int offset, int count)</string></p>
+<p>分数由小到大的顺序，取[min,max]之间的数据，offset表示取数据的开始位置（O：表示最小分数的那个位置），最多返回count个结果</p>
+</li>
+</ul>
+<ul>
+<li><p>long zrevrank(String key, String member) </p>
+<p>返回有序集key中成员member的排名。其中有序集成员按score值递减(从大到小)排序<br><br>排名以0为底，也就是说，score值最大的成员排名为0</p>
+</li>
+<li><p>Set\<string> zrevrange(String key, int start, int end)</string></p>
+<p>返回索引区间之间的元素，最大元素索引号为0,[start,end]</p>
+</li>
+<li><p>Set\<tuple> zrevrangeByScoreWithScores(String key, double max,</tuple></p>
+<pre><code>double min, int offset, int count)
+</code></pre><p>分数按大到小的顺序，取[min,max]之间的数据，offset表示取数据的开始位置（O：表示最大分数的那个位置），最多返回count个结果，Tuple包含分数、value值等信息。                       </p>
+</li>
+</ul>
+<h4 id="5-Hash"><a href="#5-Hash" class="headerlink" title="5.Hash"></a>5.Hash</h4><ul>
+<li><p>long hset(String key, String field, String value)</p>
+<p>将哈希表key中的域field的值设为value,如果key不存在，一个新的哈希表被创建并进行HSET操作。</p>
+</li>
+<li><p>long hsetBin(String key, String field, byte[] value)</p>
+<p>同上</p>
+</li>
+<li><p>long hsetnx(String key, String field, String value)</p>
+<p>将哈希表key中的域field的值设为value，如果key已经存在，不做任何处理</p>
+</li>
+<li><p>String hmset(String key, Map&lt;String, String&gt; hash)</p>
+<p>同时将多个field - value(域-值)对设置到哈希表key中</p>
+</li>
+<li><p>String hget(String key, String field)</p>
+<p>返回哈希表key中给定域field的值</p>
+</li>
+<li><p>byte[] hgetBin(String key, String field) </p>
+<p>同上</p>
+</li>
+<li><p>Map&lt;String, String&gt; hgetAll(String key)</p>
+<p>返回哈希表key中，所有的域和值</p>
+</li>
+<li><p>List<string> hmget(String key, String… fields)</string></p>
+<p>返回哈希表key中，一个或多个给定域的值，一一对应的<br><br>如果给定的域不存在于哈希表，那么返回一个null.</p>
+</li>
+<li><p>long hlen(String key)</p>
+<p>返回Hash表中的元素个数</p>
+</li>
+<li><p>Set<string> hkeys(String key)</string></p>
+<p>返回Hash表中的keys</p>
+</li>
+<li><p>List<string> hvals(String key)</string></p>
+<p>返回Hash表中的values</p>
+</li>
+<li><p>boolean hexists(String key, String field) </p>
+<p>哈希表key中，给定域field是否存在</p>
+</li>
+<li><p>long hdel(String key, String field)</p>
+<p>删除哈希表key中的一个指定域</p>
+</li>
+<li><p>long hincrBy(String key, String field, long value)</p>
+<p>对哈希中的某个key对应的值增加计数，线程安全。<br><br>如果field不存在，初始值为0<br></p>
+</li>
+</ul>
+<h3 id="lua-脚本"><a href="#lua-脚本" class="headerlink" title="lua 脚本"></a>lua 脚本</h3><p>如果一次业务请求需要执行多条命令，可以借助lua脚本批量提交执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// key：缓存键值； seconds：过期时间</span><br><span class="line">public static String luaScript(String key, long seconds) &#123;</span><br><span class="line">	return &quot;local currIncr = redis.call(&apos;INCR&apos;, &apos;&quot; + key + &quot;&apos;) &quot;</span><br><span class="line">			+ &quot;if tonumber(currIncr) == 1 &quot;</span><br><span class="line">			+ &quot;then &quot;</span><br><span class="line">			+ &quot;redis.call(&apos;EXPIRE&apos;, &apos;&quot; + key + &quot;&apos;, &quot; + seconds + &quot;) &quot;</span><br><span class="line">			+ &quot;end &quot;</span><br><span class="line">			+ &quot;return currIncr&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//寻找目标节点</span><br><span class="line">Node target = redisClient.getNodeByKey(key);</span><br><span class="line"></span><br><span class="line">//执行lua脚本命令</span><br><span class="line">Long count = (Long) redisClient.eval(target, luaScript方法返回的字符串命令);</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="http://zhangtielei.com/posts/server.html" target="_blank" rel="noopener">http://zhangtielei.com/posts/server.html</a></p>
+<p><a href="https://www.zhihu.com/question/19764056" target="_blank" rel="noopener">https://www.zhihu.com/question/19764056</a></p>
+<p><a href="http://www.redis.cn/" target="_blank" rel="noopener">http://www.redis.cn/</a></p>
+<p><a href="http://ifeve.com/category/redis/" target="_blank" rel="noopener">http://ifeve.com/category/redis/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+<div>
+      
+        
+      
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"><i class="fa fa-tag"></i> redis</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+          <div class="wp_rating">
+<div style="color: rgba(0, 0, 0, 0.75); font-size:13px; letter-spacing:3px">(&gt;看完记得五星好评哦亲&lt;)</div>
+            <div id="wpac-rating"></div>
+          </div>
+        
+
+        
+
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/12/redis/redis-master-slave/" rel="next" title="Redis安装及主从复制">
+                <i class="fa fa-chevron-left"></i> Redis安装及主从复制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/01/持续集成/CentOS-7下安装部署-Jenkins教程/" rel="prev" title="CentOS 7 下安装部署 Jenkins教程">
+                CentOS 7 下安装部署 Jenkins教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+      <!--MOB SHARE BEGIN-->
+<div class="-hoofoo-share-title">分享到：</div>
+<div class="-hoofoo-share-buttons">
+    <div class="-mob-share-weibo -hoofoo-share-weibo -hoofoo-share-ui-button"><i class="fa fa-weibo" aria-hidden="true"></i></div>
+    <div class="-mob-share-weixin -hoofoo-share-weixin -hoofoo-share-ui-button"><i class="fa fa-weixin" aria-hidden="true"></i></div>
+    <div class="-mob-share-qq -hoofoo-share-qq -hoofoo-share-ui-button"><i class="fa fa-qq" aria-hidden="true"></i></div>
+    <div class="-mob-share-twitter -hoofoo-share-twitter -hoofoo-share-ui-button"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+    <div class="-hoofoo-share-more -hoofoo-share-ui-button -mob-share-open"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></div>
+</div>
+<div class="-mob-share-ui" style="display: none">
+    <ul class="-mob-share-list">
+        <li class="-mob-share-weibo"><p>新浪微博</p></li>
+        <li class="-mob-share-weixin"><p>微信</p></li>
+        <li class="-mob-share-qzone"><p>QQ空间</p></li>
+        <li class="-mob-share-qq"><p>QQ好友</p></li>
+        <li class="-mob-share-tencentweibo"><p>腾讯微博</p></li>
+        <li class="-mob-share-renren"><p>人人网</p></li>
+        <li class="-mob-share-kaixin"><p>开心网</p></li>
+        <li class="-mob-share-douban"><p>豆瓣</p></li>
+        <li class="-mob-share-youdao"><p>有道云笔记</p></li>
+        <li class="-mob-share-mingdao"><p>明道</p></li>
+        <li class="-mob-share-pengyou"><p>朋友网</p></li>
+        <li class="-mob-share-facebook"><p>Facebook</p></li>
+        <li class="-mob-share-twitter"><p>Twitter</p></li>
+        <li class="-mob-share-pocket"><p>Pocket</p></li>
+        <li class="-mob-share-google"><p>Google+</p></li>
+        <li class="-mob-share-tumblr"><p>Tumblr</p></li>
+        <li class="-mob-share-instapaper"><p>Instapaper</p></li>
+        <li class="-mob-share-linkedin"><p>Linkedin</p></li>
+    </ul>
+    <div class="-mob-share-close">取消</div>
+</div>
+<div class="-mob-share-ui-bg"></div>
+<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=26bd318095f14"></script>
+<!--MOB SHARE END-->
+
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/1.png"
+                alt="沫离" />
+            
+              <p class="site-author-name" itemprop="name">沫离</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xzf520" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-GitHub"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="974751082@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://developer.apple.com/swift/" title="Swift 4" target="_blank">Swift 4</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://developer.apple.com/documentation/objectivec" title="Objective-C" target="_blank">Objective-C</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          <div id="days"></div>
+</script>
+<script language="javascript">
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/01/2019 00:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis缓存"><span class="nav-number">1.</span> <span class="nav-text">redis缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#附录"><span class="nav-number">1.1.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心逻辑："><span class="nav-number">1.2.</span> <span class="nav-text">核心逻辑：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同类型长度限制："><span class="nav-number">1.3.</span> <span class="nav-text">不同类型长度限制：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部方法详解："><span class="nav-number">1.4.</span> <span class="nav-text">内部方法详解：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-String"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.String</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-List"><span class="nav-number">1.5.</span> <span class="nav-text">2.List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Set"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.Set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-sorted-set"><span class="nav-number">1.5.2.</span> <span class="nav-text">4.sorted set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Hash"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.Hash</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lua-脚本"><span class="nav-number">1.6.</span> <span class="nav-text">lua 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">1.7.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沫离</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数：<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+<span class="post-meta-divider">|</span>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+-->
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共14.4k字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("dSEzksBvVcKjRW17O9ks40ew-gzGzoHsz", "x5zy0MVMa4Ch9FK2rOxXjM4q");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  <script type="text/javascript">
+  wpac_init = window.wpac_init || [];
+  wpac_init.push({widget: 'Rating', id: 12509,
+    el: 'wpac-rating',
+    color: 'fc6423'
+  });
+  (function() {
+    if ('WIDGETPACK_LOADED' in window) return;
+    WIDGETPACK_LOADED = true;
+    var mc = document.createElement('script');
+    mc.type = 'text/javascript';
+    mc.async = true;
+    mc.src = '//embed.widgetpack.com/widget.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+  })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript">
+    //微信二维码点击背景关闭
+    $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
+         $(".-mob-share-weixin-qrcode-close").trigger("click");
+    }); 
+</script>
+
+
+
+
+  <script type="text/javascript" color="250,100,49" opacity='0.5' zIndex="-1" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+
+</body>
+</html>

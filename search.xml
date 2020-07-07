@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理]]></title>
+    <url>%2F2020%2F07%2F01%2Fsoftware%2F%E6%B5%85%E8%B0%88VPN%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%2F</url>
+    <content type="text"><![CDATA[VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理一.VPN翻墙的实现方式及弊端1.1实现方式​ 本地网络上的这个计算机发送一个请求建立加密通道的数据包接入骨干网域名解析，发现我访问的并非Google或者是Facebook，而是一台我允许访问的这个国外的服务器，那么GFW放行数据包，经过中转服务器解密出我真实想要访问的地址，转到Google，然后再返回数据给中转服务器在经过强再转回本地计算机你会发现，这样一来就完美规避掉了JGFW的一切有效探测手段。 1.2弊端 二. Shadowsocks SSR v2Ray等方式运行原理 ​ 先发出一个数据包给本地的Shadowsocks服务器发送数据加密请求，这里稍微等一下，这里说的这个本地服务器能指的是你电脑上或者手机上装的这个ssr,v2ray等软件，当然这个本地服务器也可以是你的翻墙路由器或者是软路由，这些硬件形式可以有很多种啊，但是逻辑是一样的，，因为在本地所以不过墙，而且瞬间能完成加密，然后发送加密数据，经过DNS解析，通过骨干网到达国际出口J。GFW因为探测不到具有特别明显特征的这个流量，所以也放行，到达你的远程中转服务器，也就是你的远程的Shadowsocks服务器，这个可以是你自己的VPS，也可以是机场的服务器，然后解密里的数据，然后转发到Google得到回应，数据发送回来，经过远程中转服务器的加密发送加密数据到达GFW；因为探测不到具有非常特别明显的流量也不是HTTP的明文数据，所以GFW无法嗅探到敏感词，只好放行到达你的本地设置的服务器。 1.3全局的概念，何为全局代表作为翻墙软件本身所接管到的这个本机所有的流量，全部转发到代理服务器 1.4 开了全局是否一定就是全局？有些软件跑在系统层权限更高，甚至不遵循这个操作系统的这个代理规则根本就不把这个通讯流量交给翻墙软件接管了，代表性的有UWP应用是，你Windows应用程序商店下载的这些软件，这都是uwp，还有较多的比方说银行，游戏类的，都不遵循系统代理的这个设置所以就算你打开全局，虽然大部分遵循这个系统，代理规则的这个应用和服务，所以你打开了全局也没用，总知很多游戏的通讯协议是TCP,UDP，，自然就无法加速这里提到的是绝大多数。 1.5各类ssr,v2ray等线路详解大致有：CN2/BGP/IPLC/GCP/AWS/Azure QoS :服务质量,cn2优点之一 CN2:中国电信下一代承载网络， cn2 gt ,cn2 gia 价格昂贵 BGp机房：多线接入，能够自动识别你所用的网络类型并且自动使用最合适服务器得线路，自动切换网络通畅的服务器 iplc:国际私有专线，专线价格昂贵 iplc不过GFW审查 二.各种协议加密算法AES chacha20 RC4MD5 VMess websocket+TLS]]></content>
+      <tags>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[从字节码说起，分析类加载的过程，并结合内存布局，讲解对象创建与垃圾回收]]></title>
     <url>%2F2020%2F05%2F15%2Fjava%2F%E8%B5%B0%E8%BF%9BJVM%2F</url>
     <content type="text"><![CDATA[走进JVM从字节码说起，分析类加载的过程，并结合内存布局，讲解对象创建与垃圾回收 一.字节码1.加载或存储指令在某个栈帧中，通过指令操作数据在虚拟机栈的局部变量表与操作栈之间来回传输，常用指令如下： (1) 将局部变量加载到操作栈中。如ILOAD (将int类型的局部变量压入栈) 和ALOAD (将对象引用的局部变量压入栈)等。 (2)从操作栈顶存储到局部变量表。如ISTORE、 ASTORE等。 (3)将常量加载到操作栈顶，这是极为高频使用的指令。如ICONST、 BIPUSH、SIPUSH、LDC等。 ●ICONST加载的是-1 ~ 5的数( ICONST与BIPUSH的加载界限)。 ●BIPUSH，即Byte Immediate PUSH，加载-128 ~ 127 之间的数。 ●SIPUSH，即Short Immediate PUSH，加载-32768 ~ 32767之间的数。 ●LDC，即Load Constant， 在-2147483648 ~ 2147483647或者是字符串时,JVM采用LDC指令压入栈中。 2.运算指令对两个操作栈帧.上的值进行运算，并把结果写入操作栈顶，如IADD、IMUL等。 3.类型转换指令显式转换两种不同的数值类型。如I2L、D2F等。 4.对象创建与访问指令根据类进行对象的创建、初始化、方法调用相关指令，常见指令如下: (1)创建对象指令。如NEW、NEWARRAY等。 (2)访问属性指令。如GETFIELD、 PUTFIELD、 GETSTATIC等。 (3)检查实例类型指令。如INSTANCEOF、 CHECKCAST等。 5.操作栈管理指令JVM提供了直接控制操作栈的指令，常见指令如下:(1 )出栈操作。如POP即一个元素，POP2即两个元素。(2)复制栈项元素并压入栈。如DUP。 6.方法调用与返回指令常见指令如下:( 1 ) INVOKEVIRTUAL指令:调用对象的实例方法。(2 ) INVOKESPECIAL指令:调用实例初始化方法、私有方法、父类方法等。(3) INVOKESTATIC指令: 调用类静态方法。(4) RETURN指令:返回VOID类型。 7.同步指令JVM使用方法结构中的ACC_ SYNCHRONIZED标志同步方法，指令集中有.MONITORENTER和MONITOREXIT支持synchronized语义。除字节码指令外，还包含一些额外信息。例如，LINENUMBER存储了字节码与源码行号的对应关系，方便调试的时候正确地定位到代码的所在行;LOCALVARIABLE存储当前方法中使用到的局部变量表。 ​ 字节码必须通过类加载过程加载到JVM环境后，才可以执行。执行有三种模式:第一，解释执行;第二，JIT编译执行;第三，JIT编译与解释混合执行(主流JVM .默认执行模式)。 混合执行模式的优势在于解释器在启动时先解释执行,省去编译时间。随着时间推进，JVM通过热点代码统计分析，识别高频的方法调用、循环体、公共模块等，基于强大的JIT动态编译技术，将热点代码转换成机器码，直接交给CPU执行。JIT的作用是将Java字节码动态地编译成可以直接发送给处理器指令执行的机器码。 二.类加载过程在冯.诺依曼定义的计算机模型中，任何程序都需要加载到内存才能与CPU进行交流。字节码.class文件同样需要加载到内存中，才可以实例化类。“ 兵马未动，粮草先行。”ClassLoader正是准备粮草的先行军，它的使命就是提前加载.class 类文件到内存中。在加载类时，使用的是Parents Delegation Model,译为双亲委派模型，某个特定的类加载器在接到加载类的请求时，首先将加载任务委托给父类加载器，依次递归，如果父类加载器可以完成类加载任务，就成功返回；只有父类加载器无法完成此加载任务时，才自己去加载。 委托机制的意义 — 防止内存中出现多份同样的字节码比如两个类A和类B都要加载System类： 如果不用委托而是自己加载自己的，那么类A就会加载一份System字节码，然后类B又会加载一份System字节码，这样内存中就出现了两份System字节码。 如果使用委托机制，会递归的向父类查找，也就是首选用Bootstrap尝试加载，如果找不到再向下。这里的System就能在Bootstrap中找到然后加载，如果此时类B也要加载System，也从Bootstrap开始，此时Bootstrap发现已经加载过了System那么直接返回内存中的System即可而不需要重新加载，这样内存中就只有一份System的字节码了。 JVM预定义的三种类型类加载器： 启动（Bootstrap）类加载器：是用本地代码实现的类装入器，它负责将 &lt;Java_Runtime_Home&gt;/lib下面的类库加载到内存中（比如rt.jar）。由于引导类加载器涉及到虚拟机本地实现细节，开发者无法直接获取到启动类加载器的引用，所以不允许直接通过引用进行操作。 标准扩展（Extension）类加载器：是由 Sun 的 ExtClassLoader（sun.misc.Launcher$ExtClassLoader）实现的。它负责将&lt; Java_Runtime_Home &gt;/lib/ext或者由系统变量 java.ext.dir指定位置中的类库加载到内存中。开发者可以直接使用标准扩展类加载器。 系统（System）类加载器：是由 Sun 的 AppClassLoader（sun.misc.Launcher$AppClassLoader）实现的。它负责将系统类路径（CLASSPATH）中指定的类库加载到内存中。开发者可以直接使用系统类加载器。 除了以上列举的三种类加载器，还有一种比较特殊的类型 — 线程上下文类加载器。 ​ Java的类加载器是-个运行时核心基础设施模块，主要是在启动之初进行类的Load、Link 和Init,即加载、链接、初始化。​ 第一步，Load阶段读取类文件产生二进制流，并转化为特定的数据结构，初步校验cafe babe魔法数、常量池、文件长度、是否有父类等，然后创建对应类的java.lang.Class实例。​ 第二步，Link阶段包括验证、准备、解析三个步骤。验证是更详细的校验，比如final是否合规、类型是否正确、静态变量是否合理等;准备阶段是为静态变量分配内存，并设定默认值，解析类和方法确保类与类之间的相互引用正确性，完成内存结构布局。​ 第三步，Init阶段执行类构造器 方法，如果赋值运算是通过其他类的静态方法来完成的，那么会马上解析另外一个类，在虚拟机栈中执行完毕后通过返回值进行赋值。 类加载是一个将.class字节码文件实例化成Class对象并进行相关初始化的过程。在这个过程中，JVM会初始化继承树上还没有被初始化过的所有父类，并且会执行这个链路.上所有未执行过的静态代码块、静态变量赋值语句等。某些类在使用时，也可以按需由类加载器进行加载。 在学习了类加载器的实现机制后，知道双亲委派模型并非强制模型，用户可以自定义类加载器，在什么情况下需要自定义类加载器呢? (1)隔离加载类。在某些框架内进行中间件与应用的模块隔离，把类加载到不同的环境。比如，阿里内某容器框架通过自定义类加载器确保应用中依赖的jar包不会影响到中间件运行时使用的jar包。 (2)修改类加载方式。类的加载模型并非强制，除Bootstrap外，其他的加载并非一定要引入，或者根据实际情况在某个时间点进行按需进行动态加载。 (3)扩展加载源。比如从数据库、网络，甚至是电视机机顶盒进行加载。 (4)防止源码泄露。Java代码容易被编译和篡改，可以进行编译加密。那么类加载器也需要自定义，还原加密的字节码。]]></content>
@@ -54,7 +62,7 @@
   </entry>
   <entry>
     <title><![CDATA[SpringBoot Admin使用]]></title>
-    <url>%2F2020%2F04%2F12%2FAdmin%E4%BD%BF%E7%94%A8%2F</url>
+    <url>%2F2020%2F04%2F12%2FSpring%20Admin%E4%BD%BF%E7%94%A8%2F</url>
     <content type="text"><![CDATA[常见的功能或者监控如下： 显示健康状况 显示详细信息，例如 JVM和内存指标 micrometer.io指标 数据源指标 缓存指标 关注并下载日志文件 查看jvm系统和环境属性 查看Spring Boot配置属性 支持Spring Cloud的postable / env-和/ refresh-endpoint 轻松的日志级管理 与JMX-beans交互 查看线程转储 查看http跟踪 查看auditevents 查看http-endpoints 查看计划任务 查看和删除活动会话（使用spring-session） 查看Flyway / Liquibase数据库迁移 下载heapdump 状态变更通知 部署SpringBoot Admin Server，输入用户名密码进入控制台 一.SpringBoot Admin Server控制台1.1.应用墙查看注册中心上所有的微服务，每个服务部署了多少个实例，可以点击任意一个服务进入看这个服务的监控信息 1.2.服务详情点击服务，查看服务监控信息 1.3线上jvm信息如果发生oom或者死锁等问题，可以下载堆栈信息定位问题 二.客户端接入(微服务)所有服务接入也非常简单，只需要引入几个依赖和新增配置即可 2.1项目引入依赖 ​ de.codecentric​ spring-boot-admin-starter-client​ 2.1.0​ 2.2新增配置开放endpoint, 在SpringBoot2.x中，默认只开放了info、health两个端点，剩余的需要自己通过配置management.endpoints.web.exposure.include属性来加载,在项目application.yaml文件中新增配置 management: endpoints: ​ web: ​ base-path: / ​ exposure: #默认情况下，大多数actuator的端口都不会通过http公开，* 代表公开所有这些端，开#发环境可以全部打开 ​ include: ‘*’ endpoint: ​ health: ​ show-details: A**LWAYS spring: boot: ​ admin: ​ client: ​ instance: #通过ip来替换hostname ​ prefer-ip: true 2.3.检查是否生效去控制台检查是否生效]]></content>
       <tags>
         <tag>工具</tag>
@@ -105,17 +113,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[commons-lang3]]></title>
-    <url>%2F2019%2F10%2F29%2Fcommons%2Fcommons-lang3%2F</url>
-    <content type="text"><![CDATA[commons-lang3 主要是提供一些基础的操作和处理，归为以下几类： org.apache.commons.lang3（高度重用的Util类，常用的工具类静态方法；重点） org.apache.commons.lang3.builder（忽略） org.apache.commons.lang3.concurrent（忽略） org.apache.commons.lang3.event（忽略） org.apache.commons.lang3.exception（忽略） org.apache.commons.lang3.math（数字类型转换、大小比较、是否数字 等相关工具类；重点） org.apache.commons.lang3.mutable（包装值型变量，为基础数据类型扩展了更多方法） org.apache.commons.lang3.reflect（反射相关，忽略） org.apache.commons.lang3.text（文本相关） org.apache.commons.lang3.time（处理日期和时间的功能；重点） org.apache.commons.lang3.tuple（忽略） pom依赖12345&lt;dependency&gt; &lt;groupId&gt;org.apache.commons&lt;/groupId&gt; &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt; &lt;version&gt;3.4&lt;/version&gt;&lt;/dependency&gt; 常用工具类：内容虽然有点多，但我们使用最多还是一些有用的包含static方法的Util类。 StringUtils – 处理String的核心类，提供了相当多的功能； NumberUtils - 类型转换（String-&gt;Long）；取最大最小值；比较大小。所有操作都不会抛出异常，如果转换不成功返回0,0.0d,0.0f等形式，转换操作也可以指定默认值。 DateUtils -日期相关；是否同一天；时间+x；字符串转换成Date ArrayUtils – 用于对数组的操作，如添加、查找、删除、子数组、倒序、元素类型转换等； SystemUtils – 在java.lang.System基础上提供更方便的访问，如用户路径、Java版本、时区、操作系统等判断； WordUtils – 用于处理单词大小写、换行等。 StringEscapeUtils – 用于正确处理转义字符，产生正确的Java、JavaScript、HTML、XML和SQL代码； CharRange – 用于设定字符范围并做相应检查； ClassUtils – 用于对Java类的操作，不使用反射； Validate – 提供验证的操作，有点类似assert断言； 参考资料：https://commons.apache.org/proper/commons-lang/javadocs/api-release/ http://zhoualine.iteye.com/blog/1770014]]></content>
-      <categories>
-        <category>common</category>
-      </categories>
-      <tags>
-        <tag>common</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS 7 下安装部署 GitLab社区版教程]]></title>
     <url>%2F2019%2F10%2F29%2F%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%2FCentOS7%E4%B8%8B%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2-GitLab%E7%A4%BE%E5%8C%BA%E7%89%88%E6%95%99%E7%A8%8B%2F</url>
     <content type="text"><![CDATA[一、前言1、本文主要内容 GitLab11.1.4社区版部署 GitLab配置禁用创建组权限 GitLab配置邮件(SMTP) GitLab常用命令说明 先介绍一下本篇文章所使用的环境 服务器 服务器名 操作系统 硬件配置 虚拟机IP 说明 GitLab CentOS 7 1C4G 192.168.56.160 部署GitLab社区版 二、准备工作1、安准基础依赖#安装技术依赖 sudo yum install -y curl policycoreutils-python openssh-server #启动ssh服务&amp;设置为开机启动 sudo systemctl enable sshd sudo systemctl start sshd 2、安装PostfixPostfix是一个邮件服务器，GitLab发送邮件需要用到 #安装postfix sudo yum install -y postfix #启动postfix并设置为开机启动 sudo systemctl enable postfix sudo systemctl start postfix 3、开放ssh以及http服务（80端口）#开放ssh、http服务 sudo firewall-cmd –add-service=ssh –permanent sudo firewall-cmd –add-service=http –permanent #重载防火墙规则 sudo firewall-cmd –reload 三、部署过程本次我们部署的是社区版:gitlab-ce，如果要部署商业版可以把关键字替换为：gitlab-ee 1、Yum安装GitLab 添加GitLab社区版Package curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash 安装GitLab社区版 sudo yum install -y gitlab-ce 安装成功后会看到gitlab-ce打印了以下图形 2，浏览器输入 192.168.56.160就能进入到gitlab的登录界面了 这时候会提示为管理员账号设置密码。管理员账号默认username是root。 设置完成之后即可使用root账号登录，登陆后会进入欢迎界面。]]></content>
@@ -124,6 +121,17 @@
       </categories>
       <tags>
         <tag>CI/CD</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[commons-lang3]]></title>
+    <url>%2F2019%2F10%2F29%2Fcommons%2Fcommons-lang3%2F</url>
+    <content type="text"><![CDATA[commons-lang3 主要是提供一些基础的操作和处理，归为以下几类： org.apache.commons.lang3（高度重用的Util类，常用的工具类静态方法；重点） org.apache.commons.lang3.builder（忽略） org.apache.commons.lang3.concurrent（忽略） org.apache.commons.lang3.event（忽略） org.apache.commons.lang3.exception（忽略） org.apache.commons.lang3.math（数字类型转换、大小比较、是否数字 等相关工具类；重点） org.apache.commons.lang3.mutable（包装值型变量，为基础数据类型扩展了更多方法） org.apache.commons.lang3.reflect（反射相关，忽略） org.apache.commons.lang3.text（文本相关） org.apache.commons.lang3.time（处理日期和时间的功能；重点） org.apache.commons.lang3.tuple（忽略） pom依赖12345&lt;dependency&gt; &lt;groupId&gt;org.apache.commons&lt;/groupId&gt; &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt; &lt;version&gt;3.4&lt;/version&gt;&lt;/dependency&gt; 常用工具类：内容虽然有点多，但我们使用最多还是一些有用的包含static方法的Util类。 StringUtils – 处理String的核心类，提供了相当多的功能； NumberUtils - 类型转换（String-&gt;Long）；取最大最小值；比较大小。所有操作都不会抛出异常，如果转换不成功返回0,0.0d,0.0f等形式，转换操作也可以指定默认值。 DateUtils -日期相关；是否同一天；时间+x；字符串转换成Date ArrayUtils – 用于对数组的操作，如添加、查找、删除、子数组、倒序、元素类型转换等； SystemUtils – 在java.lang.System基础上提供更方便的访问，如用户路径、Java版本、时区、操作系统等判断； WordUtils – 用于处理单词大小写、换行等。 StringEscapeUtils – 用于正确处理转义字符，产生正确的Java、JavaScript、HTML、XML和SQL代码； CharRange – 用于设定字符范围并做相应检查； ClassUtils – 用于对Java类的操作，不使用反射； Validate – 提供验证的操作，有点类似assert断言； 参考资料：https://commons.apache.org/proper/commons-lang/javadocs/api-release/ http://zhoualine.iteye.com/blog/1770014]]></content>
+      <categories>
+        <category>common</category>
+      </categories>
+      <tags>
+        <tag>common</tag>
       </tags>
   </entry>
   <entry>

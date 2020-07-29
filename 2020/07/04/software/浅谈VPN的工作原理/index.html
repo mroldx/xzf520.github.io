@@ -85,18 +85,18 @@
 <meta name="keywords" content="工具">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VPN,Shadowsocks&#x2F;ShadowsocksR&#x2F;V2ray&#x2F;Trojan代理的工作原理">
-<meta property="og:url" content="http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/index.html">
+<meta property="og:url" content="http://mroldx.xyz/2020/07/04/software/浅谈VPN的工作原理/index.html">
 <meta property="og:site_name" content="沫离">
 <meta property="og:description" content="VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/img/image-20200707161738317.png">
-<meta property="og:image" content="http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/img/image-20200707161956958.png">
-<meta property="og:image" content="http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/img/image-20200707162118407.png">
-<meta property="og:updated_time" content="2020-07-07T09:00:03.373Z">
+<meta property="og:image" content="http://mroldx.xyz/img/image-20200707161738317.png">
+<meta property="og:image" content="http://mroldx.xyz/img/image-20200707161956958.png">
+<meta property="og:image" content="http://mroldx.xyz/img/image-20200707162118407.png">
+<meta property="og:updated_time" content="2020-07-29T08:53:16.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VPN,Shadowsocks&#x2F;ShadowsocksR&#x2F;V2ray&#x2F;Trojan代理的工作原理">
 <meta name="twitter:description" content="VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理">
-<meta name="twitter:image" content="http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/img/image-20200707161738317.png">
+<meta name="twitter:image" content="http://mroldx.xyz/img/image-20200707161738317.png">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/"/>
+  <link rel="canonical" href="http://mroldx.xyz/2020/07/04/software/浅谈VPN的工作原理/"/>
 
 
 
@@ -313,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/">
+    <link itemprop="mainEntityOfPage" href="http://mroldx.xyz/2020/07/04/software/浅谈VPN的工作原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="沫离">
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-01T19:08:10+08:00">
-                2020-07-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-04T19:08:10+08:00">
+                2020-07-04
               </time>
             
 
@@ -360,7 +360,7 @@
 
           
           
-             <span id="/2020/07/01/software/浅谈VPN的工作原理/" class="leancloud_visitors" data-flag-title="VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理">
+             <span id="/2020/07/04/software/浅谈VPN的工作原理/" class="leancloud_visitors" data-flag-title="VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -435,11 +435,11 @@
 
 <a id="more"></a>
 <h1 id="VPN-Shadowsocks-ShadowsocksR-V2ray-Trojan代理的工作原理"><a href="#VPN-Shadowsocks-ShadowsocksR-V2ray-Trojan代理的工作原理" class="headerlink" title="VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理"></a>VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理</h1><h2 id="一-VPN翻墙的实现方式及弊端"><a href="#一-VPN翻墙的实现方式及弊端" class="headerlink" title="一.VPN翻墙的实现方式及弊端"></a>一.VPN翻墙的实现方式及弊端</h2><h3 id="1-1实现方式"><a href="#1-1实现方式" class="headerlink" title="1.1实现方式"></a>1.1实现方式</h3><p>​          本地网络上的这个计算机发送一个请求建立加密通道的数据包接入骨干网域名解析，发现我访问的并非Google或者是Facebook，而是一台我允许访问的这个国外的服务器，那么GFW放行数据包，经过中转服务器解密出我真实想要访问的地址，转到Google，然后再返回数据给中转服务器在经过强再转回本地计算机你会发现，这样一来就完美规避掉了JGFW的一切有效探测手段。</p>
-<p><img src="img/image-20200707161738317.png" alt="image-20200707161738317"></p>
-<h3 id="1-2弊端"><a href="#1-2弊端" class="headerlink" title="1.2弊端"></a>1.2弊端</h3><p><img src="img/image-20200707161956958.png" alt="image-20200707161956958"></p>
+<p><img src="/img/image-20200707161738317.png"></p>
+<h3 id="1-2弊端"><a href="#1-2弊端" class="headerlink" title="1.2弊端"></a>1.2弊端</h3><p><img src="/img/image-20200707161956958.png"></p>
 <p>二. Shadowsocks SSR v2Ray等方式运行原理</p>
 <p>​        先发出一个数据包给本地的Shadowsocks服务器发送数据加密请求，这里稍微等一下，这里说的这个本地服务器能指的是你电脑上或者手机上装的这个ssr,v2ray等软件，当然这个本地服务器也可以是你的翻墙路由器或者是软路由，这些硬件形式可以有很多种啊，但是逻辑是一样的，，因为在本地所以不过墙，而且瞬间能完成加密，然后发送加密数据，经过DNS解析，通过骨干网到达国际出口J。GFW因为探测不到具有特别明显特征的这个流量，所以也放行，到达你的远程中转服务器，也就是你的远程的Shadowsocks服务器，这个可以是你自己的VPS，也可以是机场的服务器，然后解密里的数据，然后转发到Google得到回应，数据发送回来，经过远程中转服务器的加密发送加密数据到达GFW；因为探测不到具有非常特别明显的流量也不是HTTP的明文数据，所以GFW无法嗅探到敏感词，只好放行到达你的本地设置的服务器。</p>
-<p><img src="img/image-20200707162118407.png" alt="image-20200707162118407"></p>
+<p><img src="/img/image-20200707162118407.png"></p>
 <h3 id="1-3全局的概念，何为全局"><a href="#1-3全局的概念，何为全局" class="headerlink" title="1.3全局的概念，何为全局"></a>1.3全局的概念，何为全局</h3><p>代表作为翻墙软件本身所接管到的这个本机所有的流量，全部转发到代理服务器</p>
 <h3 id="1-4-开了全局是否一定就是全局？"><a href="#1-4-开了全局是否一定就是全局？" class="headerlink" title="1.4 开了全局是否一定就是全局？"></a>1.4 开了全局是否一定就是全局？</h3><p>有些软件跑在系统层权限更高，甚至不遵循这个操作系统的这个代理规则根本就不把这个通讯流量交给翻墙软件接管了，代表性的有UWP应用是，你Windows应用程序商店下载的这些软件，这都是uwp，还有较多的比方说银行，游戏类的，都不遵循系统代理的这个设置所以就算你打开全局，虽然大部分遵循这个系统，代理规则的这个应用和服务，所以你打开了全局也没用，总知很多游戏的通讯协议是TCP,UDP，，自然就无法加速这里提到的是绝大多数。</p>
 <h3 id="1-5各类ssr-v2ray等线路详解"><a href="#1-5各类ssr-v2ray等线路详解" class="headerlink" title="1.5各类ssr,v2ray等线路详解"></a>1.5各类ssr,v2ray等线路详解</h3><p>大致有：CN2/BGP/IPLC/GCP/AWS/Azure</p>

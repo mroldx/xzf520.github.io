@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mroldx.xyz/"/>
-  <updated>2020-07-07T09:00:03.373Z</updated>
+  <updated>2020-07-29T08:53:16.500Z</updated>
   <id>http://mroldx.xyz/</id>
   
   <author>
@@ -18,12 +18,12 @@
   
   <entry>
     <title>VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理</title>
-    <link href="http://mroldx.xyz/2020/07/01/software/%E6%B5%85%E8%B0%88VPN%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
-    <id>http://mroldx.xyz/2020/07/01/software/浅谈VPN的工作原理/</id>
-    <published>2020-07-01T11:08:10.000Z</published>
-    <updated>2020-07-07T09:00:03.373Z</updated>
+    <link href="http://mroldx.xyz/2020/07/04/software/%E6%B5%85%E8%B0%88VPN%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
+    <id>http://mroldx.xyz/2020/07/04/software/浅谈VPN的工作原理/</id>
+    <published>2020-07-04T11:08:10.000Z</published>
+    <updated>2020-07-29T08:53:16.500Z</updated>
     
-    <content type="html"><![CDATA[<p class="description"></p><a id="more"></a><h1 id="VPN-Shadowsocks-ShadowsocksR-V2ray-Trojan代理的工作原理"><a href="#VPN-Shadowsocks-ShadowsocksR-V2ray-Trojan代理的工作原理" class="headerlink" title="VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理"></a>VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理</h1><h2 id="一-VPN翻墙的实现方式及弊端"><a href="#一-VPN翻墙的实现方式及弊端" class="headerlink" title="一.VPN翻墙的实现方式及弊端"></a>一.VPN翻墙的实现方式及弊端</h2><h3 id="1-1实现方式"><a href="#1-1实现方式" class="headerlink" title="1.1实现方式"></a>1.1实现方式</h3><p>​          本地网络上的这个计算机发送一个请求建立加密通道的数据包接入骨干网域名解析，发现我访问的并非Google或者是Facebook，而是一台我允许访问的这个国外的服务器，那么GFW放行数据包，经过中转服务器解密出我真实想要访问的地址，转到Google，然后再返回数据给中转服务器在经过强再转回本地计算机你会发现，这样一来就完美规避掉了JGFW的一切有效探测手段。</p><p><img src="img/image-20200707161738317.png" alt="image-20200707161738317"></p><h3 id="1-2弊端"><a href="#1-2弊端" class="headerlink" title="1.2弊端"></a>1.2弊端</h3><p><img src="img/image-20200707161956958.png" alt="image-20200707161956958"></p><p>二. Shadowsocks SSR v2Ray等方式运行原理</p><p>​        先发出一个数据包给本地的Shadowsocks服务器发送数据加密请求，这里稍微等一下，这里说的这个本地服务器能指的是你电脑上或者手机上装的这个ssr,v2ray等软件，当然这个本地服务器也可以是你的翻墙路由器或者是软路由，这些硬件形式可以有很多种啊，但是逻辑是一样的，，因为在本地所以不过墙，而且瞬间能完成加密，然后发送加密数据，经过DNS解析，通过骨干网到达国际出口J。GFW因为探测不到具有特别明显特征的这个流量，所以也放行，到达你的远程中转服务器，也就是你的远程的Shadowsocks服务器，这个可以是你自己的VPS，也可以是机场的服务器，然后解密里的数据，然后转发到Google得到回应，数据发送回来，经过远程中转服务器的加密发送加密数据到达GFW；因为探测不到具有非常特别明显的流量也不是HTTP的明文数据，所以GFW无法嗅探到敏感词，只好放行到达你的本地设置的服务器。</p><p><img src="img/image-20200707162118407.png" alt="image-20200707162118407"></p><h3 id="1-3全局的概念，何为全局"><a href="#1-3全局的概念，何为全局" class="headerlink" title="1.3全局的概念，何为全局"></a>1.3全局的概念，何为全局</h3><p>代表作为翻墙软件本身所接管到的这个本机所有的流量，全部转发到代理服务器</p><h3 id="1-4-开了全局是否一定就是全局？"><a href="#1-4-开了全局是否一定就是全局？" class="headerlink" title="1.4 开了全局是否一定就是全局？"></a>1.4 开了全局是否一定就是全局？</h3><p>有些软件跑在系统层权限更高，甚至不遵循这个操作系统的这个代理规则根本就不把这个通讯流量交给翻墙软件接管了，代表性的有UWP应用是，你Windows应用程序商店下载的这些软件，这都是uwp，还有较多的比方说银行，游戏类的，都不遵循系统代理的这个设置所以就算你打开全局，虽然大部分遵循这个系统，代理规则的这个应用和服务，所以你打开了全局也没用，总知很多游戏的通讯协议是TCP,UDP，，自然就无法加速这里提到的是绝大多数。</p><h3 id="1-5各类ssr-v2ray等线路详解"><a href="#1-5各类ssr-v2ray等线路详解" class="headerlink" title="1.5各类ssr,v2ray等线路详解"></a>1.5各类ssr,v2ray等线路详解</h3><p>大致有：CN2/BGP/IPLC/GCP/AWS/Azure</p><p>QoS :服务质量,cn2优点之一</p><p>CN2:中国电信下一代承载网络，     cn2 gt ,cn2 gia    价格昂贵</p><p>BGp机房：多线接入，能够自动识别你所用的网络类型并且自动使用最合适服务器得线路，自动切换网络通畅的服务器</p><p>iplc:国际私有专线，专线价格昂贵  iplc不过GFW审查</p><h2 id="二-各种协议加密算法"><a href="#二-各种协议加密算法" class="headerlink" title="二.各种协议加密算法"></a>二.各种协议加密算法</h2><p>AES chacha20</p><p>RC4MD5</p><p>VMess </p><p>websocket+TLS</p>]]></content>
+    <content type="html"><![CDATA[<p class="description"></p><a id="more"></a><h1 id="VPN-Shadowsocks-ShadowsocksR-V2ray-Trojan代理的工作原理"><a href="#VPN-Shadowsocks-ShadowsocksR-V2ray-Trojan代理的工作原理" class="headerlink" title="VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理"></a>VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理</h1><h2 id="一-VPN翻墙的实现方式及弊端"><a href="#一-VPN翻墙的实现方式及弊端" class="headerlink" title="一.VPN翻墙的实现方式及弊端"></a>一.VPN翻墙的实现方式及弊端</h2><h3 id="1-1实现方式"><a href="#1-1实现方式" class="headerlink" title="1.1实现方式"></a>1.1实现方式</h3><p>​          本地网络上的这个计算机发送一个请求建立加密通道的数据包接入骨干网域名解析，发现我访问的并非Google或者是Facebook，而是一台我允许访问的这个国外的服务器，那么GFW放行数据包，经过中转服务器解密出我真实想要访问的地址，转到Google，然后再返回数据给中转服务器在经过强再转回本地计算机你会发现，这样一来就完美规避掉了JGFW的一切有效探测手段。</p><p><img src="/img/image-20200707161738317.png"></p><h3 id="1-2弊端"><a href="#1-2弊端" class="headerlink" title="1.2弊端"></a>1.2弊端</h3><p><img src="/img/image-20200707161956958.png"></p><p>二. Shadowsocks SSR v2Ray等方式运行原理</p><p>​        先发出一个数据包给本地的Shadowsocks服务器发送数据加密请求，这里稍微等一下，这里说的这个本地服务器能指的是你电脑上或者手机上装的这个ssr,v2ray等软件，当然这个本地服务器也可以是你的翻墙路由器或者是软路由，这些硬件形式可以有很多种啊，但是逻辑是一样的，，因为在本地所以不过墙，而且瞬间能完成加密，然后发送加密数据，经过DNS解析，通过骨干网到达国际出口J。GFW因为探测不到具有特别明显特征的这个流量，所以也放行，到达你的远程中转服务器，也就是你的远程的Shadowsocks服务器，这个可以是你自己的VPS，也可以是机场的服务器，然后解密里的数据，然后转发到Google得到回应，数据发送回来，经过远程中转服务器的加密发送加密数据到达GFW；因为探测不到具有非常特别明显的流量也不是HTTP的明文数据，所以GFW无法嗅探到敏感词，只好放行到达你的本地设置的服务器。</p><p><img src="/img/image-20200707162118407.png"></p><h3 id="1-3全局的概念，何为全局"><a href="#1-3全局的概念，何为全局" class="headerlink" title="1.3全局的概念，何为全局"></a>1.3全局的概念，何为全局</h3><p>代表作为翻墙软件本身所接管到的这个本机所有的流量，全部转发到代理服务器</p><h3 id="1-4-开了全局是否一定就是全局？"><a href="#1-4-开了全局是否一定就是全局？" class="headerlink" title="1.4 开了全局是否一定就是全局？"></a>1.4 开了全局是否一定就是全局？</h3><p>有些软件跑在系统层权限更高，甚至不遵循这个操作系统的这个代理规则根本就不把这个通讯流量交给翻墙软件接管了，代表性的有UWP应用是，你Windows应用程序商店下载的这些软件，这都是uwp，还有较多的比方说银行，游戏类的，都不遵循系统代理的这个设置所以就算你打开全局，虽然大部分遵循这个系统，代理规则的这个应用和服务，所以你打开了全局也没用，总知很多游戏的通讯协议是TCP,UDP，，自然就无法加速这里提到的是绝大多数。</p><h3 id="1-5各类ssr-v2ray等线路详解"><a href="#1-5各类ssr-v2ray等线路详解" class="headerlink" title="1.5各类ssr,v2ray等线路详解"></a>1.5各类ssr,v2ray等线路详解</h3><p>大致有：CN2/BGP/IPLC/GCP/AWS/Azure</p><p>QoS :服务质量,cn2优点之一</p><p>CN2:中国电信下一代承载网络，     cn2 gt ,cn2 gia    价格昂贵</p><p>BGp机房：多线接入，能够自动识别你所用的网络类型并且自动使用最合适服务器得线路，自动切换网络通畅的服务器</p><p>iplc:国际私有专线，专线价格昂贵  iplc不过GFW审查</p><h2 id="二-各种协议加密算法"><a href="#二-各种协议加密算法" class="headerlink" title="二.各种协议加密算法"></a>二.各种协议加密算法</h2><p>AES chacha20</p><p>RC4MD5</p><p>VMess </p><p>websocket+TLS</p>]]></content>
     
     <summary type="html">
     
@@ -253,28 +253,6 @@
   </entry>
   
   <entry>
-    <title>CentOS 7 下安装部署 GitLab社区版教程</title>
-    <link href="http://mroldx.xyz/2019/10/29/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/CentOS7%E4%B8%8B%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2-GitLab%E7%A4%BE%E5%8C%BA%E7%89%88%E6%95%99%E7%A8%8B/"/>
-    <id>http://mroldx.xyz/2019/10/29/持续集成/CentOS7下安装部署-GitLab社区版教程/</id>
-    <published>2019-10-29T13:33:34.000Z</published>
-    <updated>2020-05-05T07:34:06.946Z</updated>
-    
-    <content type="html"><![CDATA[<p class="description"></p><a id="more"></a><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><h3 id="1、本文主要内容"><a href="#1、本文主要内容" class="headerlink" title="1、本文主要内容"></a>1、本文主要内容</h3><ul><li>GitLab11.1.4社区版部署</li><li>GitLab配置禁用创建组权限</li><li>GitLab配置邮件(SMTP)</li><li>GitLab常用命令说明</li></ul><h5 id="先介绍一下本篇文章所使用的环境"><a href="#先介绍一下本篇文章所使用的环境" class="headerlink" title="先介绍一下本篇文章所使用的环境"></a>先介绍一下本篇文章所使用的环境</h5><ul><li>服务器</li></ul><table><thead><tr><th>服务器名</th><th>操作系统</th><th>硬件配置</th><th>虚拟机IP</th><th>说明</th></tr></thead><tbody><tr><td>GitLab</td><td>CentOS 7</td><td>1C4G</td><td>192.168.56.160</td><td>部署GitLab社区版</td></tr></tbody></table><h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><h3 id="1、安准基础依赖"><a href="#1、安准基础依赖" class="headerlink" title="1、安准基础依赖"></a>1、安准基础依赖</h3><p>#安装技术依赖 </p><p>sudo yum install -y curl policycoreutils-python openssh-server</p><p> #启动ssh服务&amp;设置为开机启动 </p><p>sudo systemctl enable sshd sudo systemctl start sshd</p><h3 id="2、安装Postfix"><a href="#2、安装Postfix" class="headerlink" title="2、安装Postfix"></a>2、安装Postfix</h3><p>Postfix是一个邮件服务器，GitLab发送邮件需要用到</p><p>#安装postfix </p><p>sudo yum install -y postfix </p><p>#启动postfix并设置为开机启动 </p><p>sudo systemctl enable postfix </p><p>sudo systemctl start postfix</p><h3 id="3、开放ssh以及http服务（80端口）"><a href="#3、开放ssh以及http服务（80端口）" class="headerlink" title="3、开放ssh以及http服务（80端口）"></a>3、开放ssh以及http服务（80端口）</h3><p>#开放ssh、http服务 </p><p>sudo firewall-cmd –add-service=ssh –permanent </p><p>sudo firewall-cmd –add-service=http –permanent</p><p>#重载防火墙规则 </p><p>sudo firewall-cmd –reload</p><h2 id="三、部署过程"><a href="#三、部署过程" class="headerlink" title="三、部署过程"></a>三、部署过程</h2><p>本次我们部署的是社区版:gitlab-ce，如果要部署商业版可以把关键字替换为：gitlab-ee</p><h3 id="1、Yum安装GitLab"><a href="#1、Yum安装GitLab" class="headerlink" title="1、Yum安装GitLab"></a>1、Yum安装GitLab</h3><ul><li>添加GitLab社区版Package</li></ul><p>curl <a href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh" target="_blank" rel="noopener">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</a> | sudo bash</p><ul><li>安装GitLab社区版</li></ul><p>sudo yum install -y gitlab-ce</p><p>安装成功后会看到gitlab-ce打印了以下图形</p><p><img src="https://img.ken.io/blog/gitlab/install/gitlab-install-success.png-kwrbm.png" alt="image-20200501131620151"></p><h3 id="2，浏览器输入-192-168-56-160就能进入到gitlab的登录界面了"><a href="#2，浏览器输入-192-168-56-160就能进入到gitlab的登录界面了" class="headerlink" title="2，浏览器输入  192.168.56.160就能进入到gitlab的登录界面了"></a>2，浏览器输入  192.168.56.160就能进入到gitlab的登录界面了</h3><p><img src="https://img.ken.io/blog/gitlab/install/gitlab-install-root-create-password.png-kblb.png" alt="image-20200501132126263"></p><p>这时候会提示为管理员账号设置密码。管理员账号默认username是root。</p><p>设置完成之后即可使用root账号登录，登陆后会进入欢迎界面。</p>]]></content>
-    
-    <summary type="html">
-    
-      CentOS 7 下安装部署 GitLab社区版教程
-    
-    </summary>
-    
-      <category term="持续集成" scheme="http://mroldx.xyz/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
-    
-    
-      <category term="CI/CD" scheme="http://mroldx.xyz/tags/CI-CD/"/>
-    
-  </entry>
-  
-  <entry>
     <title>commons-lang3</title>
     <link href="http://mroldx.xyz/2019/10/29/commons/commons-lang3/"/>
     <id>http://mroldx.xyz/2019/10/29/commons/commons-lang3/</id>
@@ -293,6 +271,28 @@
     
     
       <category term="common" scheme="http://mroldx.xyz/tags/common/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS 7 下安装部署 GitLab社区版教程</title>
+    <link href="http://mroldx.xyz/2019/10/29/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/CentOS7%E4%B8%8B%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2-GitLab%E7%A4%BE%E5%8C%BA%E7%89%88%E6%95%99%E7%A8%8B/"/>
+    <id>http://mroldx.xyz/2019/10/29/持续集成/CentOS7下安装部署-GitLab社区版教程/</id>
+    <published>2019-10-29T13:33:34.000Z</published>
+    <updated>2020-05-05T07:34:06.946Z</updated>
+    
+    <content type="html"><![CDATA[<p class="description"></p><a id="more"></a><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><h3 id="1、本文主要内容"><a href="#1、本文主要内容" class="headerlink" title="1、本文主要内容"></a>1、本文主要内容</h3><ul><li>GitLab11.1.4社区版部署</li><li>GitLab配置禁用创建组权限</li><li>GitLab配置邮件(SMTP)</li><li>GitLab常用命令说明</li></ul><h5 id="先介绍一下本篇文章所使用的环境"><a href="#先介绍一下本篇文章所使用的环境" class="headerlink" title="先介绍一下本篇文章所使用的环境"></a>先介绍一下本篇文章所使用的环境</h5><ul><li>服务器</li></ul><table><thead><tr><th>服务器名</th><th>操作系统</th><th>硬件配置</th><th>虚拟机IP</th><th>说明</th></tr></thead><tbody><tr><td>GitLab</td><td>CentOS 7</td><td>1C4G</td><td>192.168.56.160</td><td>部署GitLab社区版</td></tr></tbody></table><h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><h3 id="1、安准基础依赖"><a href="#1、安准基础依赖" class="headerlink" title="1、安准基础依赖"></a>1、安准基础依赖</h3><p>#安装技术依赖 </p><p>sudo yum install -y curl policycoreutils-python openssh-server</p><p> #启动ssh服务&amp;设置为开机启动 </p><p>sudo systemctl enable sshd sudo systemctl start sshd</p><h3 id="2、安装Postfix"><a href="#2、安装Postfix" class="headerlink" title="2、安装Postfix"></a>2、安装Postfix</h3><p>Postfix是一个邮件服务器，GitLab发送邮件需要用到</p><p>#安装postfix </p><p>sudo yum install -y postfix </p><p>#启动postfix并设置为开机启动 </p><p>sudo systemctl enable postfix </p><p>sudo systemctl start postfix</p><h3 id="3、开放ssh以及http服务（80端口）"><a href="#3、开放ssh以及http服务（80端口）" class="headerlink" title="3、开放ssh以及http服务（80端口）"></a>3、开放ssh以及http服务（80端口）</h3><p>#开放ssh、http服务 </p><p>sudo firewall-cmd –add-service=ssh –permanent </p><p>sudo firewall-cmd –add-service=http –permanent</p><p>#重载防火墙规则 </p><p>sudo firewall-cmd –reload</p><h2 id="三、部署过程"><a href="#三、部署过程" class="headerlink" title="三、部署过程"></a>三、部署过程</h2><p>本次我们部署的是社区版:gitlab-ce，如果要部署商业版可以把关键字替换为：gitlab-ee</p><h3 id="1、Yum安装GitLab"><a href="#1、Yum安装GitLab" class="headerlink" title="1、Yum安装GitLab"></a>1、Yum安装GitLab</h3><ul><li>添加GitLab社区版Package</li></ul><p>curl <a href="https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh" target="_blank" rel="noopener">https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh</a> | sudo bash</p><ul><li>安装GitLab社区版</li></ul><p>sudo yum install -y gitlab-ce</p><p>安装成功后会看到gitlab-ce打印了以下图形</p><p><img src="https://img.ken.io/blog/gitlab/install/gitlab-install-success.png-kwrbm.png" alt="image-20200501131620151"></p><h3 id="2，浏览器输入-192-168-56-160就能进入到gitlab的登录界面了"><a href="#2，浏览器输入-192-168-56-160就能进入到gitlab的登录界面了" class="headerlink" title="2，浏览器输入  192.168.56.160就能进入到gitlab的登录界面了"></a>2，浏览器输入  192.168.56.160就能进入到gitlab的登录界面了</h3><p><img src="https://img.ken.io/blog/gitlab/install/gitlab-install-root-create-password.png-kblb.png" alt="image-20200501132126263"></p><p>这时候会提示为管理员账号设置密码。管理员账号默认username是root。</p><p>设置完成之后即可使用root账号登录，登陆后会进入欢迎界面。</p>]]></content>
+    
+    <summary type="html">
+    
+      CentOS 7 下安装部署 GitLab社区版教程
+    
+    </summary>
+    
+      <category term="持续集成" scheme="http://mroldx.xyz/categories/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+    
+      <category term="CI/CD" scheme="http://mroldx.xyz/tags/CI-CD/"/>
     
   </entry>
   

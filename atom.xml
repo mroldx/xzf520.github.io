@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mroldx.xyz/"/>
-  <updated>2020-07-29T08:53:16.500Z</updated>
+  <updated>2020-08-16T02:46:43.575Z</updated>
   <id>http://mroldx.xyz/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>零基础使用小米球ngrok来快速实现内网穿透</title>
+    <link href="http://mroldx.xyz/2020/08/04/commons/%E5%B0%8F%E7%B1%B3%E7%90%83%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    <id>http://mroldx.xyz/2020/08/04/commons/小米球快速实现内网穿透/</id>
+    <published>2020-08-04T11:08:10.000Z</published>
+    <updated>2020-08-16T02:46:43.575Z</updated>
+    
+    <content type="html"><![CDATA[<p class="description"></p><a id="more"></a><h1 id="零基础使用小米球ngrok来快速实现内网穿透"><a href="#零基础使用小米球ngrok来快速实现内网穿透" class="headerlink" title="零基础使用小米球ngrok来快速实现内网穿透"></a>零基础使用小米球ngrok来快速实现内网穿透</h1><h3 id="关于ngrok及小米球ngrok"><a href="#关于ngrok及小米球ngrok" class="headerlink" title="关于ngrok及小米球ngrok"></a>关于ngrok及小米球ngrok</h3><p>​       ngrok 服务可以分配给你一个域名让你本地的web项目提供给外网访问，特别适合向别人展示你本机的web demo 以及调试一些远程的API (比如微信公众号，企业号的开发) </p><p>注意:本服务旨在给程序猿们调试本地的web项目，免去部署环节。切不可用于生产环境以及作为非法服务！</p><p>官网：<a href="http://ngrok.ciqiuwl.cn/" target="_blank" rel="noopener">http://ngrok.ciqiuwl.cn/</a></p><p>1.注册小米球ngrok获取token(免费)</p><p>前往小米球官网注册一下账号</p><p><a href="https://manager.xiaomiqiu.com/reg(注册地址)" target="_blank" rel="noopener">https://manager.xiaomiqiu.com/reg(注册地址)</a><br><img src="https://img-blog.csdnimg.cn/20200805223428459.jpg" alt="在这里插入图片描述"></p><p>注册完登录</p><p>登录地址</p><p><a href="https://manager.xiaomiqiu.com/login" target="_blank" rel="noopener">https://manager.xiaomiqiu.com/login</a></p><p><img src="https://img-blog.csdnimg.cn/20200805223453972.png" alt="在这里插入图片描述"></p><p>登录完成后是这个界面，点击账号管理—-》我的账户，复制一下这个小米球token,注册这一步就算完成。</p><p><img src="https://img-blog.csdnimg.cn/20200805223519955.png" alt="在这里插入图片描述"></p><p>接下来，我们下载一下小米球ngrok工具链接如下，</p><p>windows64位安装包， <a href="https://pan.baidu.com/s/1aks8uJx0s9XrDj7oMsvqmw" target="_blank" rel="noopener">https://pan.baidu.com/s/1aks8uJx0s9XrDj7oMsvqmw</a>  提取码 74ex<br>windows32位安装包， <a href="https://pan.baidu.com/s/1Qt8_zwNlbsVqTeClxhzN7w" target="_blank" rel="noopener">https://pan.baidu.com/s/1Qt8_zwNlbsVqTeClxhzN7w</a>    提取码 e4eg</p><p>也可以去  <a href="https://manager.xiaomiqiu.com/index（小米球首页下载其他版本的安装包）" target="_blank" rel="noopener">https://manager.xiaomiqiu.com/index（小米球首页下载其他版本的安装包）</a></p><p>下载完之后，解压到你喜欢的目录</p><p><img src="https://img-blog.csdnimg.cn/20200805223541140.png" alt="在这里插入图片描述"></p><p>编辑ngrok.conf文件，在配置文件里替换你注册后获得的token<br><img src="https://img-blog.csdnimg.cn/20200805223635985.png" alt="在这里插入图片描述"></p><p>修改完毕后，双击该文件夹里面的“小米球Ngrok一键启动工具.bat”脚本，会出现这个界面</p><p><img src="https://img-blog.csdnimg.cn/20200805223655873.png" alt="在这里插入图片描述"></p><p>隧道名称就是上面配置文件里面的httptun,httpstun等等。</p><p>成功的话就会出现类似的界面，<br><img src="https://img-blog.csdnimg.cn/20200805225551404.png" alt="在这里插入图片描述"></p><p>你在公网上输入 <a href="http://mroldx.ngrok2.xiaomiqiu.cn" target="_blank" rel="noopener">http://mroldx.ngrok2.xiaomiqiu.cn</a> 这个就能成功跳转到你的本机的127.0.0.1:8888端口下面我们来尝试一下。<br>启动一个java项目，指定为8888端口。<br><img src="https://img-blog.csdnimg.cn/20200805223726467.png" alt="在这里插入图片描述"><br>启动完成后在浏览器随便输入一个controller的接口数据比如 我本机的</p><p><img src="https://img-blog.csdnimg.cn/20200805223800366.png" alt="在这里插入图片描述"></p><p><a href="http://127.0.0.1:8888/system/osmenu/list" target="_blank" rel="noopener">http://127.0.0.1:8888/system/osmenu/list</a></p><p>换成公网应该是</p><p><a href="http://mroldx.ngrok2.xiaomiqiu.cn/system/osmenu/list" target="_blank" rel="noopener">http://mroldx.ngrok2.xiaomiqiu.cn/system/osmenu/list</a></p><p>你会发现都是返回一样的数据，这就实现了内网穿透。</p>]]></content>
+    
+    <summary type="html">
+    
+      零基础使用小米球ngrok来快速实现内网穿透
+    
+    </summary>
+    
+    
+      <category term="工具" scheme="http://mroldx.xyz/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>VPN,Shadowsocks/ShadowsocksR/V2ray/Trojan代理的工作原理</title>
@@ -253,28 +273,6 @@
   </entry>
   
   <entry>
-    <title>commons-lang3</title>
-    <link href="http://mroldx.xyz/2019/10/29/commons/commons-lang3/"/>
-    <id>http://mroldx.xyz/2019/10/29/commons/commons-lang3/</id>
-    <published>2019-10-29T13:33:34.000Z</published>
-    <updated>2020-05-05T07:34:06.938Z</updated>
-    
-    <content type="html"><![CDATA[<p class="description"></p><a id="more"></a><h2 id="commons-lang3"><a href="#commons-lang3" class="headerlink" title="commons-lang3"></a>commons-lang3</h2><hr><p><strong>主要是提供一些基础的操作和处理，归为以下几类：</strong></p><ul><li><p>org.apache.commons.lang3（高度重用的Util类，常用的工具类静态方法；重点）</p></li><li><p>org.apache.commons.lang3.builder（忽略）</p></li><li><p>org.apache.commons.lang3.concurrent（忽略）</p></li><li><p>org.apache.commons.lang3.event（忽略）</p></li><li><p>org.apache.commons.lang3.exception（忽略）</p></li><li><p>org.apache.commons.lang3.math（数字类型转换、大小比较、是否数字 等相关工具类；重点）</p></li><li><p>org.apache.commons.lang3.mutable（包装值型变量，为基础数据类型扩展了更多方法）</p></li><li><p>org.apache.commons.lang3.reflect（反射相关，忽略）</p></li><li><p>org.apache.commons.lang3.text（文本相关）</p></li><li><p>org.apache.commons.lang3.time（处理日期和时间的功能；重点）</p></li><li><p>org.apache.commons.lang3.tuple（忽略）</p></li></ul><h3 id="pom依赖"><a href="#pom依赖" class="headerlink" title="pom依赖"></a>pom依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;3.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure><h4 id="常用工具类："><a href="#常用工具类：" class="headerlink" title="常用工具类："></a>常用工具类：</h4><p>内容虽然有点多，但我们使用最多还是一些有用的包含static方法的Util类。</p><ul><li><p>StringUtils – 处理String的核心类，提供了相当多的功能；</p></li><li><p>NumberUtils - 类型转换（String-&gt;Long）；取最大最小值；比较大小。所有操作都不会抛出异常，如果转换不成功返回0,0.0d,0.0f等形式，转换操作也可以指定默认值。</p></li><li><p>DateUtils -日期相关；是否同一天；时间+x；字符串转换成Date</p></li><li><p>ArrayUtils – 用于对数组的操作，如添加、查找、删除、子数组、倒序、元素类型转换等；</p></li><li><p>SystemUtils – 在java.lang.System基础上提供更方便的访问，如用户路径、Java版本、时区、操作系统等判断；</p></li><li><p>WordUtils – 用于处理单词大小写、换行等。</p></li><li><p>StringEscapeUtils – 用于正确处理转义字符，产生正确的Java、JavaScript、HTML、XML和SQL代码；</p></li><li><p>CharRange – 用于设定字符范围并做相应检查；</p></li><li><p>ClassUtils – 用于对Java类的操作，不使用反射；</p></li><li><p>Validate – 提供验证的操作，有点类似assert断言；</p></li></ul><h5 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h5><p><a href="https://commons.apache.org/proper/commons-lang/javadocs/api-release/" target="_blank" rel="noopener">https://commons.apache.org/proper/commons-lang/javadocs/api-release/</a></p><p><a href="http://zhoualine.iteye.com/blog/1770014" target="_blank" rel="noopener">http://zhoualine.iteye.com/blog/1770014</a></p>]]></content>
-    
-    <summary type="html">
-    
-      commons-lang3是Apache下面的用来处理常用的编码方法的工具类包，例如DES、SHA1、MD5、Base64，URL，Soundx等等。 不仅是编码，也可用于解码。
-    
-    </summary>
-    
-      <category term="common" scheme="http://mroldx.xyz/categories/common/"/>
-    
-    
-      <category term="common" scheme="http://mroldx.xyz/tags/common/"/>
-    
-  </entry>
-  
-  <entry>
     <title>CentOS 7 下安装部署 GitLab社区版教程</title>
     <link href="http://mroldx.xyz/2019/10/29/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/CentOS7%E4%B8%8B%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2-GitLab%E7%A4%BE%E5%8C%BA%E7%89%88%E6%95%99%E7%A8%8B/"/>
     <id>http://mroldx.xyz/2019/10/29/持续集成/CentOS7下安装部署-GitLab社区版教程/</id>
@@ -293,6 +291,28 @@
     
     
       <category term="CI/CD" scheme="http://mroldx.xyz/tags/CI-CD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>commons-lang3</title>
+    <link href="http://mroldx.xyz/2019/10/29/commons/commons-lang3/"/>
+    <id>http://mroldx.xyz/2019/10/29/commons/commons-lang3/</id>
+    <published>2019-10-29T13:33:34.000Z</published>
+    <updated>2020-05-05T07:34:06.938Z</updated>
+    
+    <content type="html"><![CDATA[<p class="description"></p><a id="more"></a><h2 id="commons-lang3"><a href="#commons-lang3" class="headerlink" title="commons-lang3"></a>commons-lang3</h2><hr><p><strong>主要是提供一些基础的操作和处理，归为以下几类：</strong></p><ul><li><p>org.apache.commons.lang3（高度重用的Util类，常用的工具类静态方法；重点）</p></li><li><p>org.apache.commons.lang3.builder（忽略）</p></li><li><p>org.apache.commons.lang3.concurrent（忽略）</p></li><li><p>org.apache.commons.lang3.event（忽略）</p></li><li><p>org.apache.commons.lang3.exception（忽略）</p></li><li><p>org.apache.commons.lang3.math（数字类型转换、大小比较、是否数字 等相关工具类；重点）</p></li><li><p>org.apache.commons.lang3.mutable（包装值型变量，为基础数据类型扩展了更多方法）</p></li><li><p>org.apache.commons.lang3.reflect（反射相关，忽略）</p></li><li><p>org.apache.commons.lang3.text（文本相关）</p></li><li><p>org.apache.commons.lang3.time（处理日期和时间的功能；重点）</p></li><li><p>org.apache.commons.lang3.tuple（忽略）</p></li></ul><h3 id="pom依赖"><a href="#pom依赖" class="headerlink" title="pom依赖"></a>pom依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;3.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure><h4 id="常用工具类："><a href="#常用工具类：" class="headerlink" title="常用工具类："></a>常用工具类：</h4><p>内容虽然有点多，但我们使用最多还是一些有用的包含static方法的Util类。</p><ul><li><p>StringUtils – 处理String的核心类，提供了相当多的功能；</p></li><li><p>NumberUtils - 类型转换（String-&gt;Long）；取最大最小值；比较大小。所有操作都不会抛出异常，如果转换不成功返回0,0.0d,0.0f等形式，转换操作也可以指定默认值。</p></li><li><p>DateUtils -日期相关；是否同一天；时间+x；字符串转换成Date</p></li><li><p>ArrayUtils – 用于对数组的操作，如添加、查找、删除、子数组、倒序、元素类型转换等；</p></li><li><p>SystemUtils – 在java.lang.System基础上提供更方便的访问，如用户路径、Java版本、时区、操作系统等判断；</p></li><li><p>WordUtils – 用于处理单词大小写、换行等。</p></li><li><p>StringEscapeUtils – 用于正确处理转义字符，产生正确的Java、JavaScript、HTML、XML和SQL代码；</p></li><li><p>CharRange – 用于设定字符范围并做相应检查；</p></li><li><p>ClassUtils – 用于对Java类的操作，不使用反射；</p></li><li><p>Validate – 提供验证的操作，有点类似assert断言；</p></li></ul><h5 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h5><p><a href="https://commons.apache.org/proper/commons-lang/javadocs/api-release/" target="_blank" rel="noopener">https://commons.apache.org/proper/commons-lang/javadocs/api-release/</a></p><p><a href="http://zhoualine.iteye.com/blog/1770014" target="_blank" rel="noopener">http://zhoualine.iteye.com/blog/1770014</a></p>]]></content>
+    
+    <summary type="html">
+    
+      commons-lang3是Apache下面的用来处理常用的编码方法的工具类包，例如DES、SHA1、MD5、Base64，URL，Soundx等等。 不仅是编码，也可用于解码。
+    
+    </summary>
+    
+      <category term="common" scheme="http://mroldx.xyz/categories/common/"/>
+    
+    
+      <category term="common" scheme="http://mroldx.xyz/tags/common/"/>
     
   </entry>
   
